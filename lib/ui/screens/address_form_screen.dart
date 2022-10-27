@@ -54,7 +54,10 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                 TextFormField(
                   controller: _controllers['address'],
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Indirizzo'),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      labelText: 'Indirizzo'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Si prega di inserire un indirizzo valido';
@@ -74,7 +77,10 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Città'),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      labelText: 'Città'),
                 ),
                 const SizedBox(
                   height: 16,
@@ -88,7 +94,10 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Cap'),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      labelText: 'Cap'),
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(

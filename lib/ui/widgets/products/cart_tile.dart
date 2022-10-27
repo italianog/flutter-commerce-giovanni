@@ -70,11 +70,24 @@ class _CartTileState extends ConsumerState<CartTile> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  NumberFormat.currency(
-                          locale: 'it', symbol: '€', decimalDigits: 2)
-                      .format(widget.product.product.price),
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                Row(
+                  children: [
+                    Text("${widget.product.quantity} x "),
+                    Text(
+                      NumberFormat.currency(
+                              locale: 'it', symbol: '€', decimalDigits: 2)
+                          .format(widget.product.product.price),
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    const Spacer(),
+                    Text(
+                      NumberFormat.currency(
+                              locale: 'it', symbol: '€', decimalDigits: 2)
+                          .format(widget.product.product.price *
+                              widget.product.quantity),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
                 const SizedBox(
                   height: 4,

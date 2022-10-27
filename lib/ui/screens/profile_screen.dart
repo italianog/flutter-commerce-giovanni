@@ -1,5 +1,7 @@
 import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
+import 'package:ecommerce/ui/screens/order_detail_screen.dart';
+import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +63,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 label: 'Gestione indirizzi',
                 onTap: () {
                   Navigator.of(context).pushNamed(AddressesScreen.routeName);
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.dollarSign,
+                label: 'Gestione ordini',
+                onTap: () {
+                  Navigator.of(context).pushNamed(OrdersScreen.routeName);
                 },
               ),
             const SizedBox(

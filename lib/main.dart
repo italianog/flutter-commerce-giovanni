@@ -5,6 +5,8 @@ import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/onboarding_screen.dart';
+import 'package:ecommerce/ui/screens/order_detail_screen.dart';
+import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/otp_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
@@ -70,6 +72,8 @@ class MyApp extends StatelessWidget {
         SignInWithEmail.routeName: (context) => const SignInWithEmail(),
         AddressesScreen.routeName: (context) => const AddressesScreen(),
         AddressFormScreen.routeName: (context) => const AddressFormScreen(),
+        OrdersScreen.routeName: (context) => const OrdersScreen(),
+        OrderDetailScreen.routeName: (context) => const OrderDetailScreen(),
       },
     );
   }
