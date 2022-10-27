@@ -42,7 +42,7 @@ class CartProduct extends Product {
     required super.isAvailable,
     required super.availableQuantity,
     required super.image,
-    this.quantity = 1,
+    this.quantity = 5,
     this.size,
     this.color,
   });

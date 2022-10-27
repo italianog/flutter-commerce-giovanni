@@ -12,7 +12,7 @@ class CartTile extends ConsumerStatefulWidget {
     required this.product,
     required this.onDeleteProduct,
   }) : super(key: key);
-  final Product product;
+  final CartProduct product;
   final VoidCallback onDeleteProduct;
 
   @override
@@ -20,6 +20,14 @@ class CartTile extends ConsumerStatefulWidget {
 }
 
 class _CartTileState extends ConsumerState<CartTile> {
+  @override
+  void initState() {
+    super.initState();
+    _actualqty = widget.product.quantity;
+    setState(() {});
+  }
+
+  late int _actualqty;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,21 +82,31 @@ class _CartTileState extends ConsumerState<CartTile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    /*        Row(
+                    Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_actualqty > 1) {
+                                setState(() {
+                                  _actualqty--;
+                                });
+                              }
+                            },
                             icon: const Icon(Icons.remove_circle_outline)),
-                        const Text(
-                          '1',
-                          style: TextStyle(fontSize: 18),
+                        Text(
+                          _actualqty.toString(),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              _actualqty++;
+                            });
+                          },
                           icon: const Icon(Icons.add_circle_outline),
                         ),
                       ],
-                    ),*/
+                    ),
                     IconButton(
                         onPressed: () {
                           ref

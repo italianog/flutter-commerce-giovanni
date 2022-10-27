@@ -2,6 +2,7 @@ import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/ui/widgets/products/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
@@ -32,9 +33,6 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     List<Product> products = ref.watch(cartProvider);
     return Scaffold(
       backgroundColor: AppColors.backgroundGrey,
-      appBar: AppBar(
-        title: Text('Carrello'),
-      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -58,7 +56,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   shrinkWrap: true,
                   itemCount: products.length,
                   itemBuilder: (context, index) => CartTile(
-                    product: products[index],
+                    product: products[index] as CartProduct,
                     onDeleteProduct: () {
                       var snackBar = SnackBar(
                         content: Text(
@@ -75,9 +73,41 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 height: 24,
               ),
               const TextField(
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  hintStyle: TextStyle(color: Colors.green),
+                  labelStyle: TextStyle(color: Colors.green),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green, width: 1.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
                   labelText: 'Coupon',
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green)),
+                onPressed: () {
+                  validateCart();
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(
+                    children: [
+                      const FaIcon(FontAwesomeIcons.solidAddressCard),
+                      const Spacer(),
+                      const Text('Applica Coupon'),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
