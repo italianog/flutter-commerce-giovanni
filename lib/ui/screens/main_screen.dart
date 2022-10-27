@@ -1,3 +1,5 @@
+import 'package:badges/badges.dart';
+import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
@@ -5,25 +7,31 @@ import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'favorites_screen.dart';
-
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends ConsumerState<MainScreen> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final cart = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Flutter e-commerce'),
+        title: const Text(
+          'Flutter e-commerce',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -31,15 +39,6 @@ class _MainScreenState extends State<MainScreen> {
             },
             icon: const Icon(Icons.notifications),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(CartScreen.routeName);
-            },
-            icon: const FaIcon(
-              FontAwesomeIcons.cartShopping,
-              size: 20,
-            ),
-          )
         ],
       ),
       body: IndexedStack(
@@ -60,17 +59,25 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.houseUser),
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.dotCircle),
+          const BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.store),
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.cartShopping),
+            icon: Badge(
+              badgeColor: Colors.blueAccent,
+              badgeContent: Text(
+                '${cart.length}',
+                style: const TextStyle(fontSize: 10, color: Colors.white),
+              ),
+              toAnimate: false,
+              child: const FaIcon(FontAwesomeIcons.cartShopping),
+            ),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.user),
           ),
         ],

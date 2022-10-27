@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
@@ -36,6 +38,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Prodotto'),
@@ -164,16 +167,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                             color: Colors.white, fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-                        ref
-                            .read(cartProvider.notifier)
-                            .addProductToCart(CartProduct(
+                        ref.read(cartProvider.notifier).addProductToCart(
+                            CartProduct(
                               name: _product.name,
                               id: _product.id,
                               price: _product.price,
                               isAvailable: _product.isAvailable,
                               availableQuantity: _product.availableQuantity,
                               image: _product.image,
-                            ));
+                            ),
+                            1);
                         var snackBar = SnackBar(
                           content: Text(
                               'Hai aggiunto al carrello: ${_product?.name}'),
