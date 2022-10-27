@@ -47,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
         children: const [
           HomeScreen(),
           ProductsScreen(),
-          FavoritesScreen(),
+          CartScreen(),
           ProfileScreen(),
         ],
       ),
@@ -68,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
             icon: FaIcon(FontAwesomeIcons.dotCircle),
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.heart),
+            icon: FaIcon(FontAwesomeIcons.cartShopping),
           ),
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.user),

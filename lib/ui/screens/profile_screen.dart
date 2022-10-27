@@ -1,22 +1,24 @@
+import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
-import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../theme/app_colors.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(authProvider);
     return SingleChildScrollView(
       child: Container(
         color: AppColors.backgroundGrey,
@@ -25,20 +27,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 24,
             ),
-            ProfileItem(
-              icon: FontAwesomeIcons.arrowRightFromBracket,
-              label: 'Accedi',
-              onTap: () {
-                Navigator.of(context).pushNamed(SignInScreen.routeName);
-              },
-            ),
-            ProfileItem(
-              icon: FontAwesomeIcons.message,
-              label: 'Notifiche',
-              onTap: () {
-                Navigator.of(context).pushNamed(NotificationsScreen.routeName);
-              },
-            ),
+            if (user != null) UserData(),
+            if (user == null)
+              ProfileItem(
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                label: 'Accedi',
+                onTap: () {
+                  ref.read(authProvider.notifier).login();
+                  //Navigator.of(context).pushNamed(SignInScreen.routeName);
+                },
+              )
+            else
+              ProfileItem(
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                label: 'Logout',
+                onTap: () {
+                  ref.read(authProvider.notifier).logout();
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.message,
+                label: 'Notifiche',
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(NotificationsScreen.routeName);
+                },
+              ),
             const SizedBox(
               height: 32,
             ),
@@ -100,6 +115,33 @@ class ProfileItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class UserData extends ConsumerWidget {
+  const UserData({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.read(authProvider);
+    return Column(
+      children: [
+        if (user != null)
+          CircleAvatar(
+            backgroundImage: AssetImage(user.photoUrl),
+            radius: 80,
+          ),
+        const SizedBox(
+          height: 10,
+        ),
+        if (user != null) Text('${user.firstName} ${user.lastName}'),
+        const SizedBox(
+          height: 32,
+        ),
+      ],
     );
   }
 }

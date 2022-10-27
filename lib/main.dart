@@ -35,18 +35,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(
-          systemOverlayStyle: const SystemUiOverlayStyle(
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.dark,
           ),
           elevation: 0,
           color: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.black54),
+          iconTheme: IconThemeData(color: Colors.black54),
           centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,
-            fontFamily: GoogleFonts.poppins().fontFamily,
           ),
         ),
       ),

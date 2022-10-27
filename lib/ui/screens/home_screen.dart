@@ -17,7 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: SingleChildScrollView(
         child: Column(
-          children: [ECard()],
+          children: const [
+            ECard(),
+          ],
         ),
       ),
     );

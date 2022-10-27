@@ -1,20 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
   static const routeName = '/product-detail-screen';
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  ConsumerState<ProductDetailScreen> createState() =>
+      _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Product? _product;
   final bool _showMore = false;
+  String? _selectedSize;
+  String? _selectedColor;
+  int _selectedQty = 1;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -64,15 +71,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text(
-                    NumberFormat.currency(
-                            locale: 'it', symbol: '€', decimalDigits: 2)
-                        .format(_product?.price),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  if (_product?.price != null)
+                    Text(
+                      NumberFormat.currency(
+                              locale: 'it', symbol: '€', decimalDigits: 2)
+                          .format(_product?.price),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
                   const SizedBox(
                     height: 32,
                   ),
@@ -91,7 +99,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 50,
-              child: const SizeBoxes(),
+              child: SizeBoxes(
+                onSelected: (value) {
+                  print(value);
+                },
+              ),
             ),
             const SizedBox(
               height: 32,
@@ -99,7 +111,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 50,
-              child: const ColorBoxes(),
+              child: ColorBoxes(
+                onSelected: (value) {
+                  print(value);
+                },
+              ),
             ),
             const SizedBox(
               height: 32,
@@ -130,7 +146,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w500),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        ref
+                            .read(cartProvider.notifier)
+                            .addProductToCart(_product!);
+                        var snackBar = SnackBar(
+                          content: Text(
+                              'Hai aggiunto al carrello: ${_product?.name}'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
                     ),
                   )
                 ],
@@ -147,7 +172,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 }
 
 class SizeBoxes extends StatefulWidget {
-  const SizeBoxes({Key? key}) : super(key: key);
+  const SizeBoxes({
+    Key? key,
+    required this.onSelected,
+  }) : super(key: key);
+
+  final Function(String value) onSelected;
 
   @override
   State<SizeBoxes> createState() => _SizeBoxesState();
@@ -163,6 +193,7 @@ class _SizeBoxesState extends State<SizeBoxes> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => InkWell(
               onTap: () {
+                widget.onSelected(_sizes[index]);
                 setState(() {
                   _activeBox = index;
                 });
@@ -189,7 +220,12 @@ class _SizeBoxesState extends State<SizeBoxes> {
 }
 
 class ColorBoxes extends StatefulWidget {
-  const ColorBoxes({Key? key}) : super(key: key);
+  const ColorBoxes({
+    Key? key,
+    required this.onSelected,
+  }) : super(key: key);
+
+  final Function(String value) onSelected;
 
   @override
   State<ColorBoxes> createState() => _ColorBoxesState();
@@ -205,6 +241,7 @@ class _ColorBoxesState extends State<ColorBoxes> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => InkWell(
               onTap: () {
+                widget.onSelected(_colors[index].toString());
                 setState(() {
                   _activeBox = index;
                 });
