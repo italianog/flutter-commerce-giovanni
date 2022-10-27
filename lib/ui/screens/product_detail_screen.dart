@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
-  Product? _product;
+  late Product _product;
   final bool _showMore = false;
   String? _selectedSize;
   String? _selectedColor;
@@ -27,7 +29,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _product = ModalRoute.of(context)!.settings.arguments as Product?;
+      _product = ModalRoute.of(context)!.settings.arguments as Product;
       setState(() {});
     });
   }
@@ -36,23 +38,22 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_product?.name ?? ''),
+        title: const Text('Prodotto'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_product != null)
-              Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: CachedNetworkImage(
-                    width: double.infinity,
-                    imageUrl: _product!.image,
-                  ),
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.4),
+                child: CachedNetworkImage(
+                  width: double.infinity,
+                  imageUrl: _product.image,
                 ),
               ),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -71,16 +72,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   const SizedBox(
                     width: 20,
                   ),
-                  if (_product?.price != null)
-                    Text(
-                      NumberFormat.currency(
-                              locale: 'it', symbol: '€', decimalDigits: 2)
-                          .format(_product?.price),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                  Text(
+                    NumberFormat.currency(
+                            locale: 'it', symbol: '€', decimalDigits: 2)
+                        .format(_product?.price),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
+                  ),
                   const SizedBox(
                     height: 32,
                   ),
@@ -88,20 +88,30 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Al contrario di quanto si pensi, Lorem Ipsum non è semplicemente una sequenza casuale di caratteri. Risale ad un classico della letteratura latina del 45 AC, cosa che lo rende vecchio di 2000 anni. Richard McClintock, professore di latino al Hampden-Sydney College in Virginia, ha ricercato una delle più oscure parole latine, consectetur, da un passaggio del Lorem Ipsum e ha scoperto tra i vari testi in cui è citata, la fonte da cui è tratto il testo, le sezioni 1.10.32 and 1.10.33 del "de Finibus Bonorum et Malorum" di Cicerone. Questo testo è un trattato su teorie di etica, molto popolare nel Rinascimento. La prima riga del Lorem Ipsum, "Lorem ipsum dolor sit amet..", è tratta da un passaggio della sezione 1.10.32.',
               ),
             ),
             const SizedBox(
-              height: 32,
+              height: 10,
+            ),
+            SelectQuantity(
+              onChanged: (value) {
+                setState(() {
+                  _selectedQty = value;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 16,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 50,
               child: SizeBoxes(
                 onSelected: (value) {
-                  print(value);
+                  _selectedSize = value;
                 },
               ),
             ),
@@ -113,7 +123,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               height: 50,
               child: ColorBoxes(
                 onSelected: (value) {
-                  print(value);
+                  setState(() {
+                    _selectedColor = value;
+                  });
                 },
               ),
             ),
@@ -128,10 +140,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     flex: 2,
                     child: IconButton(
                       icon: Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey[400],
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? Colors.red : Colors.grey[400],
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _isFavorite = !_isFavorite;
+                          //TODO CALL API
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -149,12 +166,21 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       onPressed: () {
                         ref
                             .read(cartProvider.notifier)
-                            .addProductToCart(_product!);
+                            .addProductToCart(CartProduct(
+                              name: _product.name,
+                              id: _product.id,
+                              price: _product.price,
+                              isAvailable: _product.isAvailable,
+                              availableQuantity: _product.availableQuantity,
+                              image: _product.image,
+                            ));
                         var snackBar = SnackBar(
                           content: Text(
                               'Hai aggiunto al carrello: ${_product?.name}'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        print('$_selectedSize $_selectedColor $_selectedQty');
+                        ;
                       },
                     ),
                   )
@@ -184,8 +210,14 @@ class SizeBoxes extends StatefulWidget {
 }
 
 class _SizeBoxesState extends State<SizeBoxes> {
-  int _activeBox = 0;
+  @override
+  void initState() {
+    super.initState();
+    widget.onSelected(_sizes[0]);
+  }
+
   final List<String> _sizes = ['XS', 'S', 'M', 'L', 'XL'];
+  int _activeBox = 0;
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -232,8 +264,14 @@ class ColorBoxes extends StatefulWidget {
 }
 
 class _ColorBoxesState extends State<ColorBoxes> {
-  int _activeBox = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final List<Color> _colors = [Colors.amber, Colors.brown, Colors.deepPurple];
+  int _activeBox = 0;
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -263,5 +301,49 @@ class _ColorBoxesState extends State<ColorBoxes> {
               width: 16,
             ),
         itemCount: _colors.length);
+  }
+}
+
+class SelectQuantity extends StatefulWidget {
+  const SelectQuantity({
+    Key? key,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final Function(int value) onChanged;
+
+  @override
+  State<SelectQuantity> createState() => _SelectQuantityState();
+}
+
+class _SelectQuantityState extends State<SelectQuantity> {
+  int _qty = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          onPressed: () {
+            if (_qty > 1) {
+              setState(() {
+                _qty--;
+                widget.onChanged(_qty);
+              });
+            }
+          },
+          icon: const Icon(Icons.remove_circle_outline),
+        ),
+        Text('$_qty'),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              _qty++;
+              widget.onChanged(_qty);
+            });
+          },
+          icon: const Icon(Icons.add_circle_outline),
+        )
+      ],
+    );
   }
 }

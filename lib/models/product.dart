@@ -29,3 +29,21 @@ class Product {
         availableQuantity: 10);
   }
 }
+
+class CartProduct extends Product {
+  final int quantity;
+  final String? size;
+  final String? color;
+
+  CartProduct({
+    required super.name,
+    required super.id,
+    required super.price,
+    required super.isAvailable,
+    required super.availableQuantity,
+    required super.image,
+    this.quantity = 1,
+    this.size,
+    this.color,
+  });
+}

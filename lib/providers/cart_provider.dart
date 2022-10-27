@@ -5,12 +5,12 @@
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CartNotifier extends StateNotifier<List<Product>> {
+class CartNotifier extends StateNotifier<List<CartProduct>> {
   // We initialize the list of todos to an empty list
   CartNotifier() : super([]);
 
   // Let's allow the UI to add todos.
-  void addProductToCart(Product product) {
+  void addProductToCart(CartProduct product) {
     // Since our state is immutable, we are not allowed to do `state.add(todo)`.
     // Instead, we should create a new list of todos which contains the previous
     // items and the new one.
@@ -37,10 +37,15 @@ class CartNotifier extends StateNotifier<List<Product>> {
     }
     return sum;
   }
+
+  bool isAlreadyInCart() {
+    return false;
+  }
 }
 
 // Finally, we are using StateNotifierProvider to allow the UI to interact with
 // our TodosNotifier class.
-final cartProvider = StateNotifierProvider<CartNotifier, List<Product>>((ref) {
+final cartProvider =
+    StateNotifierProvider<CartNotifier, List<CartProduct>>((ref) {
   return CartNotifier();
 });
