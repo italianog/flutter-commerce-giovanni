@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../apis/apis.dart';
 import '../../models/product.dart';
@@ -16,7 +15,11 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   List<Product>? _products;
-
+  List<Map<String, bool>> filters = [
+    {'Filter_0': false},
+    {'Filter_1': false},
+    {'Filter_2': false},
+  ];
   Future getProducts() async {
     Apis apis = Apis();
     _products = await apis.getProducts();
@@ -31,14 +34,133 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const cellRed = Color(0xffc73232);
-    const cellMustard = Color(0xffd7aa22);
-    const cellGrey = Color(0xffcfd4e0);
-    const cellBlue = Color(0xff1553be);
-    const background = Color(0xff242830);
     return SingleChildScrollView(
       child: Column(
         children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            color: Colors.blueAccent,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    child: TextFormField(
+                      cursorColor: Colors.black87,
+                      decoration: InputDecoration(
+                        hintText: 'Cerca tra i prodotti ...',
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.black54,
+                        ),
+                        contentPadding: const EdgeInsets.all(16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      context: (context),
+                      builder: (context) => StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        return Column(
+                          children: [
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            Expanded(
+                              child: ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      CheckboxListTile(
+                                          tristate: true,
+                                          title: Text(
+                                              filters[index].keys.toString()),
+                                          value: filters[index]
+                                              ['Filter_$index'],
+                                          onChanged: (value) {
+                                            setState(() {
+                                              filters[index]['Filter_$index'] =
+                                                  !filters[index]
+                                                      ['Filter_$index']!;
+                                            });
+                                          }),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                  shrinkWrap: true,
+                                  itemCount: filters.length),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  //TODO APPLY FILTERS
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Applica'),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    for (var i = 0; i < filters.length; i++) {
+                                      filters[i]['Filter_$i'] = false;
+                                    }
+                                  });
+
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancella filtri'),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            )
+                          ],
+                        );
+                      }),
+                    );
+                  },
+                  icon: const FaIcon(
+                    FontAwesomeIcons.filter,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ),
           const SizedBox(
             height: 16,
           ),
