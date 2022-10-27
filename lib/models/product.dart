@@ -30,19 +30,15 @@ class Product {
   }
 }
 
-class CartProduct extends Product {
+class CartProduct {
+  final Product product;
   final int quantity;
   final String? size;
   final String? color;
 
-  CartProduct({
-    required super.name,
-    required super.id,
-    required super.price,
-    required super.isAvailable,
-    required super.availableQuantity,
-    required super.image,
-    this.quantity = 5,
+  const CartProduct({
+    required this.product,
+    required this.quantity,
     this.size,
     this.color,
   });

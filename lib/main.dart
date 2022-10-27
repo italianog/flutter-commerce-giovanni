@@ -1,3 +1,5 @@
+import 'package:ecommerce/ui/screens/address_form_screen.dart';
+import 'package:ecommerce/ui/screens/addresses_screen.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
@@ -66,6 +68,8 @@ class MyApp extends StatelessWidget {
         OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
         CartScreen.routeName: (context) => const CartScreen(),
         SignInWithEmail.routeName: (context) => const SignInWithEmail(),
+        AddressesScreen.routeName: (context) => const AddressesScreen(),
+        AddressFormScreen.routeName: (context) => const AddressFormScreen(),
       },
     );
   }

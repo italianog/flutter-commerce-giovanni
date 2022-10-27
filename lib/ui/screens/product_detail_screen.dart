@@ -1,11 +1,7 @@
-import 'dart:developer';
-
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
@@ -149,6 +145,23 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       onPressed: () {
                         setState(() {
                           _isFavorite = !_isFavorite;
+                          if (_isFavorite) {
+                            var snackBar = SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                  'Hai aggiunto ai preferiti: ${_product?.name}'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            var snackBar = SnackBar(
+                              backgroundColor: Colors.purple,
+                              content: Text(
+                                  'Hai rimosso dai preferiti: ${_product?.name}'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
                           //TODO CALL API
                         });
                       },
@@ -168,15 +181,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       ),
                       onPressed: () {
                         ref.read(cartProvider.notifier).addProductToCart(
-                            CartProduct(
-                              name: _product.name,
-                              id: _product.id,
-                              price: _product.price,
-                              isAvailable: _product.isAvailable,
-                              availableQuantity: _product.availableQuantity,
-                              image: _product.image,
-                            ),
-                            1);
+                            product: _product,
+                            quantity: _selectedQty,
+                            size: _selectedSize,
+                            color: _selectedColor);
                         var snackBar = SnackBar(
                           content: Text(
                               'Hai aggiunto al carrello: ${_product?.name}'),
@@ -191,7 +199,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             const SizedBox(
-              height: 64,
+              height: 120,
             ),
           ],
         ),

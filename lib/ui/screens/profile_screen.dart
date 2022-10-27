@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../theme/app_colors.dart';
+import 'addresses_screen.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             const SizedBox(
               height: 24,
             ),
-            if (user != null) UserData(),
+            if (user != null) const UserData(),
             if (user == null)
               ProfileItem(
                 icon: FontAwesomeIcons.arrowRightFromBracket,
@@ -54,6 +55,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       .pushNamed(NotificationsScreen.routeName);
                 },
               ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.addressBook,
+                label: 'Gestione indirizzi',
+                onTap: () {
+                  Navigator.of(context).pushNamed(AddressesScreen.routeName);
+                },
+              ),
             const SizedBox(
               height: 32,
             ),
@@ -73,7 +82,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               },
             ),
             const SizedBox(
-              height: 1000,
+              height: 250,
             )
           ],
         ),

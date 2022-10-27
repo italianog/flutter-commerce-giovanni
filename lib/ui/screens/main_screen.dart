@@ -41,15 +41,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: const [
-          HomeScreen(),
-          ProductsScreen(),
-          CartScreen(),
-          ProfileScreen(),
-        ],
-      ),
+      body: _buildChild(_currentIndex),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _currentIndex,
         backgroundColor: Colors.white,
@@ -70,7 +62,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             icon: Badge(
               badgeColor: Colors.blueAccent,
               badgeContent: Text(
-                '${cart.length}',
+                '${ref.read(cartProvider.notifier).getTotalQty()}',
                 style: const TextStyle(fontSize: 10, color: Colors.white),
               ),
               toAnimate: false,
@@ -83,5 +75,20 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ],
       ),
     );
+  }
+
+  _buildChild(int currentIndex) {
+    switch (currentIndex) {
+      case 0:
+        return const HomeScreen();
+      case 1:
+        return const ProductsScreen();
+      case 2:
+        return const CartScreen();
+      case 3:
+        return const ProfileScreen();
+      default:
+        return const HomeScreen();
+    }
   }
 }

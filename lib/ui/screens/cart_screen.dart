@@ -30,7 +30,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Product> products = ref.watch(cartProvider);
+    List<CartProduct> products = ref.watch(cartProvider);
     return Scaffold(
       backgroundColor: AppColors.backgroundGrey,
       body: SingleChildScrollView(
@@ -56,11 +56,11 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   shrinkWrap: true,
                   itemCount: products.length,
                   itemBuilder: (context, index) => CartTile(
-                    product: products[index] as CartProduct,
+                    product: products[index],
                     onDeleteProduct: () {
                       var snackBar = SnackBar(
                         content: Text(
-                            'Hai rimosso dal carrello: ${products[index].name}'),
+                            'Hai rimosso dal carrello: ${products[index].product.name}'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
@@ -102,10 +102,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Row(
-                    children: [
-                      const FaIcon(FontAwesomeIcons.solidAddressCard),
-                      const Spacer(),
-                      const Text('Applica Coupon'),
+                    children: const [
+                      FaIcon(FontAwesomeIcons.solidAddressCard),
+                      Spacer(),
+                      Text('Applica Coupon'),
                     ],
                   ),
                 ),

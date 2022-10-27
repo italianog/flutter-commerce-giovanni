@@ -23,7 +23,7 @@ class _CartTileState extends ConsumerState<CartTile> {
   @override
   void initState() {
     super.initState();
-    _actualqty = widget.product.quantity;
+    _actualqty = widget.product.quantity!;
     setState(() {});
   }
 
@@ -51,7 +51,7 @@ class _CartTileState extends ConsumerState<CartTile> {
             child: CachedNetworkImage(
               height: 100,
               width: 100,
-              imageUrl: widget.product.image,
+              imageUrl: widget.product.product.image,
             ),
           ),
           const SizedBox(
@@ -65,7 +65,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                   height: 8,
                 ),
                 Text(
-                  widget.product.name,
+                  widget.product.product.name,
                 ),
                 const SizedBox(
                   height: 10,
@@ -73,7 +73,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                 Text(
                   NumberFormat.currency(
                           locale: 'it', symbol: '€', decimalDigits: 2)
-                      .format(widget.product.price),
+                      .format(widget.product.product.price),
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
@@ -87,12 +87,18 @@ class _CartTileState extends ConsumerState<CartTile> {
                         IconButton(
                             onPressed: () {
                               if (_actualqty > 1) {
+                                ref
+                                    .read(cartProvider.notifier)
+                                    .decreaseQuantity(widget.product);
                                 setState(() {
                                   _actualqty--;
                                 });
                               }
                             },
-                            icon: const Icon(Icons.remove_circle_outline)),
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.black54,
+                            )),
                         Text(
                           _actualqty.toString(),
                           style: const TextStyle(fontSize: 18),
@@ -101,9 +107,13 @@ class _CartTileState extends ConsumerState<CartTile> {
                           onPressed: () {
                             setState(() {
                               _actualqty++;
+                              ref
+                                  .read(cartProvider.notifier)
+                                  .increaseQuantity(widget.product);
                             });
                           },
-                          icon: const Icon(Icons.add_circle_outline),
+                          icon: const Icon(Icons.add_circle_outline,
+                              color: Colors.black54),
                         ),
                       ],
                     ),
@@ -111,10 +121,11 @@ class _CartTileState extends ConsumerState<CartTile> {
                         onPressed: () {
                           ref
                               .read(cartProvider.notifier)
-                              .removeProductFromCart(widget.product.id);
+                              .removeProductFromCart(widget.product.product.id);
                           widget.onDeleteProduct();
                         },
-                        icon: const Icon(Icons.delete_outline))
+                        icon: const Icon(Icons.delete_outline,
+                            color: Colors.black54))
                   ],
                 )
               ],

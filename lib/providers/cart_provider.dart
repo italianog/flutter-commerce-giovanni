@@ -8,11 +8,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CartNotifier extends StateNotifier<List<CartProduct>> {
   CartNotifier() : super([]);
 
-  void addProductToCart(CartProduct product, int? quantity) {
-    if (isAlreadyInCart(product)) {
-      //TODO non fare niente
+  int findProductInCart(Product product) {
+    int foundIndex = -1;
+    for (int i = 0; i < state.length; i++) {
+      if (state[i].product.id == product.id) {
+        foundIndex = i;
+      }
+    }
+    return foundIndex;
+  }
+
+  bool validateCoupon() {
+    return true;
+  }
+
+  void addProductToCart(
+      {required Product product, int? quantity, String? color, String? size}) {
+    int foundIndex = findProductInCart(product);
+    if (foundIndex == -1) {
+      state = [
+        ...state,
+        CartProduct(
+          product: product,
+          quantity: quantity ?? 1,
+        )
+      ];
     } else {
-      state = [...state, product];
+      state = [
+        for (var i = 0; i < state.length; i++)
+          if (i == foundIndex)
+            CartProduct(
+                product: state[i].product, quantity: state[i].quantity + 1)
+          else
+            state[i]
+      ];
     }
   }
 
@@ -22,26 +51,65 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     // changing the existing list.
     state = [
       for (final product in state)
-        if (product.id != productId) product,
+        if (product.product.id != productId) product,
     ];
   }
 
   double getTotalAmount() {
     double sum = 0;
     for (final product in state) {
-      sum += product.price;
+      sum += product.product.price * product.quantity;
     }
     return sum;
   }
 
-  bool isAlreadyInCart(Product product) {
+  int getTotalQty() {
+    int count = 0;
     for (final element in state) {
-      if (element.id == product.id) {
-        print('already in cart');
-        return true;
-      }
+      count += element.quantity;
     }
-    return false;
+    return count;
+  }
+
+  void decreaseQuantity(CartProduct cartProduct) {
+    int foundIndex = findProductInCart(cartProduct.product);
+    if (foundIndex == -1) {
+      state = [
+        ...state,
+        CartProduct(
+            product: cartProduct.product, quantity: (cartProduct.quantity) + 1)
+      ];
+    } else {
+      state = [
+        for (var i = 0; i < state.length; i++)
+          if (i == foundIndex)
+            if (state[i].quantity > 1)
+              CartProduct(
+                  product: state[i].product, quantity: state[i].quantity - 1)
+            else
+              state[i]
+      ];
+    }
+  }
+
+  void increaseQuantity(CartProduct cartProduct) {
+    int foundIndex = findProductInCart(cartProduct.product);
+    if (foundIndex == -1) {
+      state = [
+        ...state,
+        CartProduct(
+            product: cartProduct.product, quantity: (cartProduct.quantity) + 1)
+      ];
+    } else {
+      state = [
+        for (var i = 0; i < state.length; i++)
+          if (i == foundIndex)
+            CartProduct(
+                product: state[i].product, quantity: state[i].quantity + 1)
+          else
+            state[i]
+      ];
+    }
   }
 }
 
