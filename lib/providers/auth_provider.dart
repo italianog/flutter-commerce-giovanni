@@ -21,7 +21,6 @@ class AuthNotifier extends StateNotifier<User?> {
 
   void getCurrentUser() {
     state = _firebaseAuth.currentUser;
-    print(state);
   }
 
   Future<bool> signup(String email, String password) async {

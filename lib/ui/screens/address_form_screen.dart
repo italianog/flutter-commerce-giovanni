@@ -15,6 +15,7 @@ class AddressFormScreen extends ConsumerStatefulWidget {
 
 class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool edit = false;
   Address? _address;
   final Map<String, TextEditingController> _controllers = {
     'city': TextEditingController(),
@@ -28,6 +29,7 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _address = ModalRoute.of(context)?.settings.arguments as Address?;
+        if (_address != null) edit = true;
         _controllers['city']?.text = _address?.city ?? '';
         _controllers['address']?.text = _address?.address ?? '';
         _controllers['cap']?.text = _address?.postalCode ?? '';
@@ -104,9 +106,14 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                   height: 50,
                 ),
                 SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () {}, child: Text('Conferma'))),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _formKey.currentState!.validate();
+                    },
+                    child: Text(edit ? 'Modifica' : 'Conferma'),
+                  ),
+                ),
               ],
             ),
           ),
