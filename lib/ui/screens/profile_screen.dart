@@ -1,8 +1,8 @@
 import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
-import 'package:ecommerce/ui/screens/order_detail_screen.dart';
 import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
+import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,8 +36,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 icon: FontAwesomeIcons.arrowRightFromBracket,
                 label: 'Accedi',
                 onTap: () {
-                  ref.read(authProvider.notifier).login();
-                  //Navigator.of(context).pushNamed(SignInScreen.routeName);
+                  // ref.read(authProvider.notifier).login();
+                  Navigator.of(context).pushNamed(SignInScreen.routeName);
                 },
               )
             else
@@ -148,15 +148,26 @@ class UserData extends ConsumerWidget {
     final user = ref.read(authProvider);
     return Column(
       children: [
-        if (user != null)
+        if (user != null && user.photoURL != null)
           CircleAvatar(
-            backgroundImage: AssetImage(user.photoUrl),
+            backgroundImage: AssetImage(user.photoURL!),
             radius: 80,
           ),
         const SizedBox(
           height: 10,
         ),
-        if (user != null) Text('${user.firstName} ${user.lastName}'),
+        if (user != null)
+          RichText(
+            text: TextSpan(
+              text: 'Ciao ',
+              style: const TextStyle(fontSize: 18, color: Colors.black87),
+              children: <TextSpan>[
+                TextSpan(
+                    text: '${user.email}',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
         const SizedBox(
           height: 32,
         ),

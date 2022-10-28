@@ -14,20 +14,44 @@ import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
+import 'package:ecommerce/ui/screens/splash_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'firebase_options.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  configLoading();
+
   runApp(
     const ProviderScope(
       child: MyApp(),
     ),
   );
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +60,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -56,6 +81,7 @@ class MyApp extends StatelessWidget {
       initialRoute: OnBoardingScreen.routeName,
       routes: {
         '/': (context) => const MainScreen(),
+        SplashScreen.routeName: (context) => const SplashScreen(),
         ProductsScreen.routeName: (context) => const ProductsScreen(),
         ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
         SignInScreen.routeName: (context) => const SignInScreen(),

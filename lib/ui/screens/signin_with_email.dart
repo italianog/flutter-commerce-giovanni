@@ -1,27 +1,29 @@
+import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignInWithEmail extends StatefulWidget {
+class SignInWithEmail extends ConsumerStatefulWidget {
   const SignInWithEmail({Key? key}) : super(key: key);
 
   static const routeName = 'sign-in-with-email-screen';
 
   @override
-  State<SignInWithEmail> createState() => _SignInWithEmailState();
+  ConsumerState<SignInWithEmail> createState() => _SignInWithEmailState();
 }
 
-class _SignInWithEmailState extends State<SignInWithEmail> {
+class _SignInWithEmailState extends ConsumerState<SignInWithEmail> {
   bool _hidePassword = true;
   final _formKey = GlobalKey<FormState>();
+  final Map<String, TextEditingController> _controllers = {
+    'email': TextEditingController(),
+    'password': TextEditingController(),
+  };
 
   bool _validateEmail(String email) {
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
     return emailValid;
-  }
-
-  bool _validatePassword(String password) {
-    return true;
   }
 
   @override
@@ -41,6 +43,7 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                 height: 32,
               ),
               TextFormField(
+                controller: _controllers['email'],
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
@@ -61,11 +64,12 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                 height: 20,
               ),
               TextFormField(
+                controller: _controllers['password'],
                 validator: (value) {
-                  if (value == null ||
-                      value.isEmpty ||
-                      _validatePassword(value) == false) {
+                  if (value == null || value.isEmpty) {
                     return 'Errore password';
+                  } else if (value.isNotEmpty && value.length < 6) {
+                    'La lunghezza minima della password è 6 caratteri';
                   }
                   return null;
                 },
@@ -92,7 +96,9 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                 width: double.infinity,
                 child: MaterialButton(
                   onPressed: () {
-                    _formKey.currentState!.validate();
+                    if (_formKey.currentState!.validate()) {
+                      tryLogin();
+                    }
                   },
                   color: Colors.blue,
                   child: const Text(
@@ -110,5 +116,13 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
         ),
       ),
     );
+  }
+
+  Future<void> tryLogin() async {
+    final value = await ref.read(authProvider.notifier).login(
+          _controllers['email']!.text,
+          _controllers['password']!.text,
+        );
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 }

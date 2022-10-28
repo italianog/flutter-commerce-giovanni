@@ -1,21 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/user.dart';
 
 class AuthNotifier extends StateNotifier<User?> {
   AuthNotifier() : super(null);
 
-  void login() {
-    state = const User(
-        id: 1,
-        email: 'italianog93@gmail.com',
-        firstName: 'Giovanni',
-        lastName: 'Italiano',
-        photoUrl: 'assets/images/user.jpeg',
-        telephone: '3409540350');
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<bool> login(String email, String password) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    state = _firebaseAuth.currentUser;
+    return true;
   }
 
-  void logout() {
-    state = null;
+  Future<void> logout() async {
+    await _firebaseAuth.signOut();
+    state = _firebaseAuth.currentUser;
+  }
+
+  void getCurrentUser() {
+    state = _firebaseAuth.currentUser;
+    print(state);
+  }
+
+  Future<bool> signup(String email, String password) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    final result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    await EasyLoading.showSuccess('Utente creato con Successo');
+    await EasyLoading.dismiss();
+    state = _firebaseAuth.currentUser;
+    return true;
   }
 }
 

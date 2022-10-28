@@ -64,7 +64,7 @@ class NotificationListTile extends StatelessWidget {
             bottom: BorderSide(color: Colors.black26, width: 0.5),
           ),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           children: [
             Text('Notifica ${index + 1}'),

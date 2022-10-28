@@ -56,6 +56,14 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 20,
             ),
             const EmailLogin(),
+            const SizedBox(
+              height: 40,
+            ),
+            const Center(child: Text('oppure')),
+            const SizedBox(
+              height: 16,
+            ),
+            const RegisterButton()
           ],
         ),
       ),

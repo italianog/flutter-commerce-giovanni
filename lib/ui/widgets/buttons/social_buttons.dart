@@ -1,3 +1,4 @@
+import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -117,6 +118,35 @@ class EmailLogin extends StatelessWidget {
           Spacer(),
           Text(
             'Login with Email',
+            style:
+                TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RegisterButton extends StatelessWidget {
+  const RegisterButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      onPressed: () {
+        Navigator.of(context).pushNamed(SignUpScreen.routeName);
+      },
+      child: Row(
+        children: const [
+          Icon(
+            Icons.mail,
+            size: 26,
+          ),
+          Spacer(),
+          Text(
+            'Registrati',
             style:
                 TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
           ),

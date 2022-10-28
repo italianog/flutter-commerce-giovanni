@@ -53,6 +53,12 @@ dependencies:
   device_info_plus: ^8.0.0
   badges: ^2.0.3
   flutter_layout_grid: ^2.0.0
+  firebase_core: ^2.0.0
+  firebase_auth: ^4.1.0
+  flutter_easyloading: ^3.0.5
+
+
+
 
 dev_dependencies:
   flutter_test:
