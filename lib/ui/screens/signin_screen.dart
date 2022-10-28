@@ -1,3 +1,4 @@
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,6 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundGrey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -25,13 +27,13 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
+            /*     gradient: LinearGradient(
             colors: [
               Color(0xffbdc3c7),
               Color(0xff2c3e50),
             ],
-          ),
-        ),
+          ),*/
+            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
               width: 120,
             ),
             const SizedBox(
-              height: 200,
+              height: 120,
             ),
             const FacebookLoginButton(),
             const SizedBox(
