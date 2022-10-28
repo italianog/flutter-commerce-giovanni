@@ -1,3 +1,5 @@
+/// Unused cause FireBaseAuth
+
 class User {
   final int id;
   final String firstName;

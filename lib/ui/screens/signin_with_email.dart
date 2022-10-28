@@ -109,7 +109,7 @@ class _SignInWithEmailState extends ConsumerState<SignInWithEmail> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 32,
               ),
             ],
           ),

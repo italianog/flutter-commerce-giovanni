@@ -39,7 +39,23 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Il tuo carrello'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Il tuo carrello'),
+                  if (ref.read(cartProvider).isNotEmpty)
+                    ElevatedButton(
+                        onPressed: () {
+                          ref.read(cartProvider.notifier).emptyCart();
+                          var snackBar = const SnackBar(
+                            content: Text(
+                                'Hai rimosso tutti i prodotti dal carrello'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        child: const Text('Svuota carrello')),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),
