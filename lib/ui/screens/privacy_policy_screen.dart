@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
+class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({Key? key}) : super(key: key);
 
   static const routeName = '/privacy-policy-screen';
 
+  @override
+  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
+}
+
+class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
+  double _value = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Privacy Policy'),
         centerTitle: true,
+        bottom: _value < 1
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(6.0),
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.red.withOpacity(0.3),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+                  value: _value,
+                ),
+              )
+            : null,
       ),
       body: WebView(
         initialUrl:
@@ -19,7 +35,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (WebViewController webViewController) {},
         onProgress: (int progress) {
-          print('WebView is loading (progress : $progress%)');
+          setState(() {
+            _value = progress / 100;
+          });
         },
         javascriptChannels: <JavascriptChannel>{},
         navigationDelegate: (NavigationRequest request) {

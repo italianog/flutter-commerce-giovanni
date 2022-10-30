@@ -34,7 +34,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Prodotto'),
@@ -43,6 +42,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
