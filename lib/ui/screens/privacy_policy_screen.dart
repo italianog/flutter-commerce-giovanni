@@ -39,7 +39,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
             _value = progress / 100;
           });
         },
-        javascriptChannels: <JavascriptChannel>{},
+        javascriptChannels: const <JavascriptChannel>{},
         navigationDelegate: (NavigationRequest request) {
           if (request.url.startsWith('https://www.youtube.com/')) {
             print('blocking navigation to $request}');

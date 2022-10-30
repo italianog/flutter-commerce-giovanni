@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,9 +9,14 @@ class AuthNotifier extends StateNotifier<User?> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<bool> login(String email, String password) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
-    state = _firebaseAuth.currentUser;
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      state = _firebaseAuth.currentUser;
+    } on Exception catch (e) {
+      // TODO
+      return false;
+    }
     return true;
   }
 

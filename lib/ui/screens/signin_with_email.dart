@@ -123,6 +123,16 @@ class _SignInWithEmailState extends ConsumerState<SignInWithEmail> {
           _controllers['email']!.text,
           _controllers['password']!.text,
         );
-    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+    if (value == false) {
+      const snackBar = SnackBar(
+        content: Text('Credenziali non valide'),
+      );
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      if (!mounted) return;
+      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+    }
   }
 }
