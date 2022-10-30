@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/address_form_screen.dart';
 import 'package:ecommerce/ui/screens/addresses_screen.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
@@ -6,6 +10,7 @@ import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/onboarding_screen.dart';
 import 'package:ecommerce/ui/screens/order_detail_screen.dart';
+import 'package:ecommerce/ui/screens/order_result_screen.dart';
 import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/otp_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
@@ -16,20 +21,53 @@ import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:ecommerce/ui/screens/splash_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
+import 'package:ecommerce/ui/theme/themes.dart';
+import 'package:ecommerce/ui/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_options.dart';
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configLoading();
+  //requestNotificationsPermission();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  configLoading();
+/*
+  await FirebaseMessaging.instance.getInitialMessage();
+  getFirebaseToken();
+  initPlatformState();
+  initNotifications();
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      importance: Importance.max,
+    );
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    // If `onMessage` is triggered with a notification, construct our own
+    // local notification to show to users using the created channel.
+    if (notification != null && android != null) {}
+  });
+*/
 
   runApp(
     const ProviderScope(
@@ -37,6 +75,53 @@ Future main() async {
     ),
   );
 }
+
+void initNotifications() {
+  const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+  const initializationSettings = InitializationSettings(
+    android: androidSettings,
+    iOS: DarwinInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification),
+  );
+  FlutterLocalNotificationsPlugin().initialize(initializationSettings,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+}
+
+Future<void> requestNotificationsPermission() async {
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  NotificationSettings notificationSetting =
+      await firebaseMessaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    sound: true,
+  );
+
+  switch (notificationSetting.authorizationStatus) {
+    case (AuthorizationStatus.authorized):
+      print('granted');
+      break;
+    default:
+      print('not granted');
+      break;
+  }
+}
+
+Future<void> getFirebaseToken() async {
+  FirebaseMessaging.instance.getToken().then((value) {
+    print(value);
+  });
+}
+
+void onDidReceiveLocalNotification(
+    int id, String? title, String? body, String? payload) {
+  print(title);
+  print(body);
+}
+
+void onDidReceiveNotificationResponse(NotificationResponse details) {}
 
 void configLoading() {
   EasyLoading.instance
@@ -54,30 +139,15 @@ void configLoading() {
     ..dismissOnTap = false;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          elevation: 0,
-          color: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black54),
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-      ),
+      theme: ref.read(themeProvider),
       initialRoute: OnBoardingScreen.routeName,
       routes: {
         '/': (context) => const MainScreen(),
@@ -100,6 +170,7 @@ class MyApp extends StatelessWidget {
         AddressFormScreen.routeName: (context) => const AddressFormScreen(),
         OrdersScreen.routeName: (context) => const OrdersScreen(),
         OrderDetailScreen.routeName: (context) => const OrderDetailScreen(),
+        OrderResultScreen.routeName: (context) => const OrderResultScreen()
       },
     );
   }

@@ -28,7 +28,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 15,
+                itemCount: 4,
                 itemBuilder: (context, index) => NotificationListTile(
                     index: index, read: index % 2 == 0 ? true : false),
               ),

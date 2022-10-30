@@ -164,6 +164,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
           const SizedBox(
             height: 16,
           ),
+          Wrap(
+            spacing: 12,
+            children: [
+              FilterChip(
+                label: const Text('Tutto'),
+                onSelected: (value) {},
+              ),
+              FilterChip(
+                label: const Text('Tutto'),
+                onSelected: (value) {},
+              ),
+              FilterChip(
+                label: const Text('Tutto'),
+                onSelected: (value) {},
+              ),
+              FilterChip(
+                label: const Text('Tutto'),
+                onSelected: (value) {},
+              ),
+              FilterChip(
+                label: const Text('Tutto'),
+                onSelected: (value) {},
+              ),
+            ],
+          ),
           if (_products != null)
             GridView.builder(
               padding: const EdgeInsets.all(16),
@@ -216,7 +241,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ],
                 );
               },
-            ),
+            )
+          else
+            Container(
+              margin: const EdgeInsets.only(top: 32),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
         ],
       ),
     );

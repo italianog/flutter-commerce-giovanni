@@ -25,11 +25,16 @@ class AuthNotifier extends StateNotifier<User?> {
 
   Future<bool> signup(String email, String password) async {
     await EasyLoading.show(
-      status: 'loading...',
+      status: 'Caricamento in corso ...',
       maskType: EasyLoadingMaskType.black,
     );
-    final result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+
+    try {
+      final result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on Exception catch (e) {
+      EasyLoading.dismiss();
+    }
     await EasyLoading.showSuccess('Utente creato con Successo');
     await EasyLoading.dismiss();
     state = _firebaseAuth.currentUser;

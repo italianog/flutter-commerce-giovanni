@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/ui/screens/order_result_screen.dart';
 import 'package:ecommerce/ui/widgets/products/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,29 @@ class CartScreen extends ConsumerStatefulWidget {
 }
 
 class _CartScreenState extends ConsumerState<CartScreen> {
-  bool validateCart() {
+  final TextEditingController _couponController = TextEditingController();
+  bool? _validCoupon;
+  final List<String> _coupons = [];
+
+  bool validateCoupon() {
+    if (_couponController.text.isNotEmpty) {
+      if (_couponController.text.contains('123')) {
+        const snackBar = SnackBar(
+          content: Text('Coupon inserito con successo'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        setState(() {
+          _validCoupon = true;
+          _coupons.add(_couponController.text);
+          _couponController.text = '';
+        });
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool validateOrder() {
     const snackBar = SnackBar(
       content: Text('Il tuo carrello è vuoto'),
     );
@@ -25,7 +48,18 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return false;
     }
-    return false;
+    return true;
+  }
+
+  void deleteCoupon() {
+    const snackBar = SnackBar(
+      content: Text('Coupon cancellato!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() {
+      _validCoupon = null;
+      _couponController.clear();
+    });
   }
 
   @override
@@ -88,18 +122,47 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               const SizedBox(
                 height: 24,
               ),
-              const TextField(
+              ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: _coupons.length,
+                itemBuilder: (context, index) => CouponTile(
+                  coupon: _coupons[index],
+                  onDeleteCoupon: () {
+                    _coupons.removeAt(index);
+                    var snackBar = const SnackBar(
+                      content: Text('Hai rimosso il coupon'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    setState(() {});
+                  },
+                ),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 24,
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextField(
+                controller: _couponController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.green),
-                  labelStyle: TextStyle(color: Colors.green),
-                  border: OutlineInputBorder(
+                  suffixIcon: IconButton(
+                      onPressed: deleteCoupon,
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.green,
+                      )),
+                  hintStyle: const TextStyle(color: Colors.green),
+                  labelStyle: const TextStyle(color: Colors.green),
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.green, width: 1.0),
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.green, width: 1.0),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.green),
                   ),
                   labelText: 'Coupon',
@@ -113,7 +176,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  validateCart();
+                  validateCoupon();
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -134,7 +197,11 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.black)),
                 onPressed: () {
-                  validateCart();
+                  final result = validateOrder();
+                  if (result == true) {
+                    Navigator.of(context)
+                        .pushNamed(OrderResultScreen.routeName);
+                  }
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),

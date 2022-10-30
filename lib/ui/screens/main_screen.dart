@@ -1,10 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
+import 'package:ecommerce/ui/theme/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +46,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       body: _buildChild(_currentIndex),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _currentIndex,
-        backgroundColor: Colors.white,
         iconSize: 22,
         onTap: (index) {
           setState(() {

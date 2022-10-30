@@ -149,3 +149,42 @@ class _CartTileState extends ConsumerState<CartTile> {
     );
   }
 }
+
+class CouponTile extends ConsumerStatefulWidget {
+  const CouponTile({
+    Key? key,
+    required this.coupon,
+    required this.onDeleteCoupon,
+  }) : super(key: key);
+  final String coupon;
+  final VoidCallback onDeleteCoupon;
+
+  @override
+  ConsumerState<CouponTile> createState() => _CouponTileState();
+}
+
+class _CouponTileState extends ConsumerState<CouponTile> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      tileColor: Colors.white,
+      title: Text(widget.coupon),
+      subtitle: const Text('Coupon inerito'),
+      trailing: IconButton(
+        color: Colors.green,
+        icon: const Icon(
+          Icons.delete,
+        ),
+        onPressed: () {
+          widget.onDeleteCoupon();
+        },
+      ),
+    );
+  }
+}
