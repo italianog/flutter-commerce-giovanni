@@ -52,14 +52,16 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   }
 
   void deleteCoupon() {
-    const snackBar = SnackBar(
-      content: Text('Coupon cancellato!'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    setState(() {
-      _validCoupon = null;
-      _couponController.clear();
-    });
+    if (_couponController.text.isNotEmpty) {
+      const snackBar = SnackBar(
+        content: Text('Coupon cancellato!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      setState(() {
+        _validCoupon = null;
+        _couponController.clear();
+      });
+    }
   }
 
   @override

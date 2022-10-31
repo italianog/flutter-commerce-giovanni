@@ -175,7 +175,7 @@ class _CouponTileState extends ConsumerState<CouponTile> {
     return ListTile(
       tileColor: Colors.white,
       title: Text(widget.coupon),
-      subtitle: const Text('Coupon inerito'),
+      subtitle: const Text('Coupon inserito'),
       trailing: IconButton(
         color: Colors.green,
         icon: const Icon(
