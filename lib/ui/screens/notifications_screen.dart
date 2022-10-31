@@ -18,22 +18,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         title: const Text('Le tue notifiche'),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 4,
-                itemBuilder: (context, index) => NotificationListTile(
-                    index: index, read: index % 2 == 0 ? true : false),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 4,
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 4,
+              itemBuilder: (context, index) => NotificationListTile(
+                  index: index, read: index % 2 == 0 ? true : false),
+            ),
+          ],
         ),
       ),
     );
@@ -59,12 +56,12 @@ class NotificationListTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: read ? Colors.white : Colors.white54,
+          color: read ? Colors.white : Colors.grey[300],
           border: const Border(
             bottom: BorderSide(color: Colors.black26, width: 0.5),
           ),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         child: Row(
           children: [
             Text('Notifica ${index + 1}'),

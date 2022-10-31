@@ -11,30 +11,82 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final double _pageHorizontalPadding = 16;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text('Prodotti in offerta'),
-            SizedBox(
-              height: 8,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Hero(),
+          const SizedBox(
+            height: 8,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+            child: const Text(
+              'Prodotti in offerta',
+              style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            PreviewProductsList(),
-            SizedBox(
-              height: 32,
-            ),
-            ECard(),
-            SizedBox(
-              height: 20,
-            ),
-            ECardSecondary(),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+              child: const PreviewProductsList()),
+          const SizedBox(
+            height: 32,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+            child: const ECard(),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+            child: const ECardSecondary(),
+          ),
+          const SizedBox(
+            height: 80,
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class Hero extends StatelessWidget {
+  const Hero({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 250,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              colorFilter: ColorFilter.linearToSrgbGamma(),
+              image: NetworkImage(
+                'https://www.moradam.com/wp-content/uploads/2018/07/seo95.jpg',
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(top: 120),
+          alignment: Alignment.center,
+          child: const Text(
+            '',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ],
     );
   }
 }

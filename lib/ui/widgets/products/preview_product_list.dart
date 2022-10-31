@@ -49,7 +49,7 @@ class _PreviewProductsListState extends ConsumerState<PreviewProductsList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 160,
       child: ListView.separated(
           clipBehavior: Clip.none,
           shrinkWrap: true,
@@ -77,8 +77,7 @@ class ProductPreview extends StatelessWidget {
             .pushNamed(ProductDetailScreen.routeName, arguments: product);
       },
       child: Container(
-        height: 120,
-        width: 200,
+        width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -109,7 +108,10 @@ class ProductPreview extends StatelessWidget {
             Text(
               product.name.capitalize(),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
