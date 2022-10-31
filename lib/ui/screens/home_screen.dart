@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../theme/text_styles.dart';
+import '../widgets/products/preview_product_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +17,16 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
+            Text('Prodotti in offerta'),
+            SizedBox(
+              height: 8,
+            ),
+            PreviewProductsList(),
+            SizedBox(
+              height: 32,
+            ),
             ECard(),
             SizedBox(
               height: 20,

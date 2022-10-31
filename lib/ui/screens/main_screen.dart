@@ -6,7 +6,6 @@ import 'package:ecommerce/ui/screens/home_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
-import 'package:ecommerce/ui/theme/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
+  static const routeName = '/main-screem';
 
   @override
   ConsumerState<MainScreen> createState() => _MainScreenState();
@@ -23,7 +23,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final cart = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

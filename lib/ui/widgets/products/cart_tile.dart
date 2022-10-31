@@ -46,18 +46,20 @@ class _CartTileState extends ConsumerState<CartTile> {
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              height: 100,
-              width: 100,
-              imageUrl: widget.product.product.image,
+          Expanded(
+            flex: 3,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: widget.product.product.image,
+              ),
             ),
           ),
           const SizedBox(
             width: 20,
           ),
           Expanded(
+            flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
