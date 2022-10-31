@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
@@ -71,6 +72,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 label: 'Gestione ordini',
                 onTap: () {
                   Navigator.of(context).pushNamed(OrdersScreen.routeName);
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: Icons.favorite,
+                label: 'I tuoi preferiti',
+                onTap: () {
+                  Navigator.of(context).pushNamed(FavoritesScreen.routeName);
                 },
               ),
             const SizedBox(

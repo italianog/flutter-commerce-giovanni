@@ -5,6 +5,7 @@ import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/address_form_screen.dart';
 import 'package:ecommerce/ui/screens/addresses_screen.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
+import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
@@ -25,6 +26,7 @@ import 'package:ecommerce/ui/theme/themes.dart';
 import 'package:ecommerce/ui/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -148,9 +150,12 @@ class MyApp extends ConsumerWidget {
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       theme: ref.read(themeProvider),
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
       initialRoute: OnBoardingScreen.routeName,
+      themeMode: ThemeMode.system,
       routes: {
         '/': (context) => const MainScreen(),
+        FavoritesScreen.routeName: (context) => const FavoritesScreen(),
         SplashScreen.routeName: (context) => const SplashScreen(),
         ProductsScreen.routeName: (context) => const ProductsScreen(),
         ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
