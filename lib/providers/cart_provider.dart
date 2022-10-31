@@ -49,10 +49,7 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     }
   }
 
-  // Let's allow removing todos
   void removeProductFromCart(int productId) {
-    // Again, our state is immutable. So we're making a new list instead of
-    // changing the existing list.
     state = [
       for (final product in state)
         if (product.product.id != productId) product,
@@ -67,7 +64,7 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     return sum;
   }
 
-  int getTotalQty() {
+  int get getTotalQty {
     int count = 0;
     for (final element in state) {
       count += element.quantity;
@@ -117,8 +114,6 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
   }
 }
 
-// Finally, we are using StateNotifierProvider to allow the UI to interact with
-// our TodosNotifier class.
 final cartProvider =
     StateNotifierProvider<CartNotifier, List<CartProduct>>((ref) {
   return CartNotifier();

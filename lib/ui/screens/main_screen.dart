@@ -20,9 +20,25 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   int _currentIndex = 0;
+  String value = '0';
   @override
   Widget build(BuildContext context) {
+    ref.listen(cartProvider, (previous, next) {
+      int count = 0;
+      for (final element in next) {
+        count += element.quantity;
+      }
+      setState(() {
+        value = count.toString();
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -62,7 +78,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             icon: Badge(
               badgeColor: Colors.blueAccent,
               badgeContent: Text(
-                '${ref.read(cartProvider.notifier).getTotalQty()}',
+                value,
                 style: const TextStyle(fontSize: 10, color: Colors.white),
               ),
               toAnimate: false,
