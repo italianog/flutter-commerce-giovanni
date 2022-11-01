@@ -1,11 +1,12 @@
 class Product {
   final String name;
-  final int id;
+  final int? id;
   final double price;
   final double? promotionalPrice;
   final bool isAvailable;
   final int availableQuantity;
   final String? category;
+  final String? description;
   final String image;
 
   const Product({
@@ -16,17 +17,19 @@ class Product {
     required this.isAvailable,
     required this.availableQuantity,
     this.category,
+    this.description,
     required this.image,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-        name: map['title'],
+        name: map['name'] ?? map['title'],
         id: map['id'],
         price: map['price'] * 1.00,
-        isAvailable: true,
+        isAvailable: map['isAvailable'] ?? true,
         image: map['image'],
-        availableQuantity: 10);
+        availableQuantity: 10,
+        description: map['description']);
   }
 }
 

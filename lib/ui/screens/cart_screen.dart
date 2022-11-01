@@ -68,168 +68,173 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   Widget build(BuildContext context) {
     List<CartProduct> products = ref.watch(cartProvider);
     return Scaffold(
-      backgroundColor: AppColors.backgroundGrey,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Il tuo carrello'),
-                  if (ref.read(cartProvider).isNotEmpty)
-                    ElevatedButton(
-                        onPressed: () {
-                          ref.read(cartProvider.notifier).emptyCart();
-                          var snackBar = const SnackBar(
-                            content: Text(
-                                'Hai rimosso tutti i prodotti dal carrello'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        child: const Text('Svuota carrello')),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (products.isEmpty)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: const Center(
-                    child: Text('Il tuo carrello è attualmente vuoto'),
+      appBar: AppBar(
+        title: const Text('Carrello'),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Il tuo carrello'),
+                    if (ref.read(cartProvider).isNotEmpty)
+                      ElevatedButton(
+                          onPressed: () {
+                            ref.read(cartProvider.notifier).emptyCart();
+                            var snackBar = const SnackBar(
+                              content: Text(
+                                  'Hai rimosso tutti i prodotti dal carrello'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          },
+                          child: const Text('Svuota carrello')),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (products.isEmpty)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: const Center(
+                      child: Text('Il tuo carrello è attualmente vuoto'),
+                    ),
+                  )
+                else
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: products.length,
+                    itemBuilder: (context, index) => CartTile(
+                      product: products[index],
+                      onDeleteProduct: () {
+                        var snackBar = SnackBar(
+                          content: Text(
+                              'Hai rimosso dal carrello: ${products[index].product.name}'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 24,
+                    ),
                   ),
-                )
-              else
+                const SizedBox(
+                  height: 24,
+                ),
                 ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: products.length,
-                  itemBuilder: (context, index) => CartTile(
-                    product: products[index],
-                    onDeleteProduct: () {
-                      var snackBar = SnackBar(
-                        content: Text(
-                            'Hai rimosso dal carrello: ${products[index].product.name}'),
+                  itemCount: _coupons.length,
+                  itemBuilder: (context, index) => CouponTile(
+                    coupon: _coupons[index],
+                    onDeleteCoupon: () {
+                      _coupons.removeAt(index);
+                      var snackBar = const SnackBar(
+                        content: Text('Hai rimosso il coupon'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      setState(() {});
                     },
                   ),
                   separatorBuilder: (context, index) => const SizedBox(
                     height: 24,
                   ),
                 ),
-              const SizedBox(
-                height: 24,
-              ),
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _coupons.length,
-                itemBuilder: (context, index) => CouponTile(
-                  coupon: _coupons[index],
-                  onDeleteCoupon: () {
-                    _coupons.removeAt(index);
-                    var snackBar = const SnackBar(
-                      content: Text('Hai rimosso il coupon'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    setState(() {});
-                  },
-                ),
-                separatorBuilder: (context, index) => const SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextField(
-                controller: _couponController,
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      onPressed: deleteCoupon,
-                      icon: const Icon(
-                        Icons.delete_outline,
-                        color: Colors.green,
-                      )),
-                  hintStyle: const TextStyle(color: Colors.green),
-                  labelStyle: const TextStyle(color: Colors.green),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 1.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 1.0),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green),
-                  ),
-                  labelText: 'Coupon',
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green)),
-                onPressed: () {
-                  validateCoupon();
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    children: const [
-                      FaIcon(FontAwesomeIcons.solidAddressCard),
-                      Spacer(),
-                      Text('Applica Coupon'),
-                    ],
+                TextField(
+                  controller: _couponController,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        onPressed: deleteCoupon,
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.green,
+                        )),
+                    hintStyle: const TextStyle(color: Colors.green),
+                    labelStyle: const TextStyle(color: Colors.green),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 1.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 1.0),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                    labelText: 'Coupon',
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black)),
-                onPressed: () {
-                  final result = validateOrder();
-                  if (result == true) {
-                    Navigator.of(context)
-                        .pushNamed(OrderResultScreen.routeName);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.credit_card),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      const Text('Conferma'),
-                      const Spacer(),
-                      Text(
-                        NumberFormat.currency(
-                                locale: 'it', symbol: '€', decimalDigits: 2)
-                            .format(
-                          ref.read(cartProvider.notifier).getTotalAmount(),
+                const SizedBox(
+                  height: 8,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green)),
+                  onPressed: () {
+                    validateCoupon();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      children: const [
+                        FaIcon(FontAwesomeIcons.solidAddressCard),
+                        Spacer(),
+                        Text('Applica Coupon'),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.black)),
+                  onPressed: () {
+                    final result = validateOrder();
+                    if (result == true) {
+                      Navigator.of(context)
+                          .pushNamed(OrderResultScreen.routeName);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.credit_card),
+                        const SizedBox(
+                          width: 16,
                         ),
-                      ),
-                    ],
+                        const Text('Conferma'),
+                        const Spacer(),
+                        Text(
+                          NumberFormat.currency(
+                                  locale: 'it', symbol: '€', decimalDigits: 2)
+                              .format(
+                            ref.read(cartProvider.notifier).getTotalAmount(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-            ],
+                const SizedBox(
+                  height: 32,
+                ),
+              ],
+            ),
           ),
         ),
       ),

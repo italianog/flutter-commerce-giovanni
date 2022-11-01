@@ -14,45 +14,51 @@ class _HomeScreenState extends State<HomeScreen> {
   final double _pageHorizontalPadding = 16;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Hero(),
-          const SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
-            child: const Text(
-              'Prodotti in offerta',
-              style: TextStyle(fontWeight: FontWeight.w500),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Hero(),
+            const SizedBox(
+              height: 8,
             ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
-              child: const PreviewProductsList()),
-          const SizedBox(
-            height: 32,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
-            child: const ECard(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
-            child: const ECardSecondary(),
-          ),
-          const SizedBox(
-            height: 80,
-          ),
-        ],
+              child: const Text(
+                'Prodotti in offerta',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+                child: const PreviewProductsList()),
+            const SizedBox(
+              height: 32,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+              child: const ECard(),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _pageHorizontalPadding),
+              child: const ECardSecondary(),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+          ],
+        ),
       ),
     );
   }

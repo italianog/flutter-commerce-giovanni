@@ -5,6 +5,7 @@ import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/address_form_screen.dart';
 import 'package:ecommerce/ui/screens/addresses_screen.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
+import 'package:ecommerce/ui/screens/edit_profile.dart';
 import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
@@ -152,7 +153,7 @@ class MyApp extends ConsumerWidget {
       theme: ref.read(themeProvider),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
       initialRoute: OnBoardingScreen.routeName,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       routes: {
         '/': (context) => const MainScreen(),
         FavoritesScreen.routeName: (context) => const FavoritesScreen(),
@@ -175,7 +176,8 @@ class MyApp extends ConsumerWidget {
         AddressFormScreen.routeName: (context) => const AddressFormScreen(),
         OrdersScreen.routeName: (context) => const OrdersScreen(),
         OrderDetailScreen.routeName: (context) => const OrderDetailScreen(),
-        OrderResultScreen.routeName: (context) => const OrderResultScreen()
+        OrderResultScreen.routeName: (context) => const OrderResultScreen(),
+        EditProfile.routeName: (context) => const EditProfile(),
       },
     );
   }

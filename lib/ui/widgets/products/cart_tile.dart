@@ -134,9 +134,8 @@ class _CartTileState extends ConsumerState<CartTile> {
                     ),
                     IconButton(
                         onPressed: () {
-                          ref
-                              .read(cartProvider.notifier)
-                              .removeProductFromCart(widget.product.product.id);
+                          ref.read(cartProvider.notifier).removeProductFromCart(
+                              widget.product.product.id!);
                           widget.onDeleteProduct();
                         },
                         icon: const Icon(Icons.delete_outline,

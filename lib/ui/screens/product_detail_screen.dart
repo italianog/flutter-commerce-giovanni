@@ -16,7 +16,7 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
-  late Product _product;
+  Product? _product;
   final bool _showMore = false;
   String? _selectedSize;
   String? _selectedColor;
@@ -45,16 +45,18 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             const SizedBox(
               height: 20,
             ),
-            Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.4),
-                child: CachedNetworkImage(
-                  width: double.infinity,
-                  imageUrl: _product.image,
+            if (_product != null)
+              Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.8,
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: CachedNetworkImage(
+                    width: double.infinity,
+                    imageUrl: _product!.image,
+                  ),
                 ),
               ),
-            ),
             const SizedBox(
               height: 16,
             ),
@@ -73,25 +75,26 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text(
-                    NumberFormat.currency(
-                            locale: 'it', symbol: '€', decimalDigits: 2)
-                        .format(_product?.price),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  if (_product != null)
+                    Text(
+                      NumberFormat.currency(
+                              locale: 'it', symbol: '€', decimalDigits: 2)
+                          .format(_product?.price),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
                   const SizedBox(
                     height: 32,
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'Al contrario di quanto si pensi, Lorem Ipsum non è semplicemente una sequenza casuale di caratteri. Risale ad un classico della letteratura latina del 45 AC, cosa che lo rende vecchio di 2000 anni. Richard McClintock, professore di latino al Hampden-Sydney College in Virginia, ha ricercato una delle più oscure parole latine, consectetur, da un passaggio del Lorem Ipsum e ha scoperto tra i vari testi in cui è citata, la fonte da cui è tratto il testo, le sezioni 1.10.32 and 1.10.33 del "de Finibus Bonorum et Malorum" di Cicerone. Questo testo è un trattato su teorie di etica, molto popolare nel Rinascimento. La prima riga del Lorem Ipsum, "Lorem ipsum dolor sit amet..", è tratta da un passaggio della sezione 1.10.32.',
+                _product?.description ?? '',
               ),
             ),
             const SizedBox(
@@ -183,7 +186,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       ),
                       onPressed: () {
                         ref.read(cartProvider.notifier).addProductToCart(
-                            product: _product,
+                            product: _product!,
                             quantity: _selectedQty,
                             size: _selectedSize,
                             color: _selectedColor);

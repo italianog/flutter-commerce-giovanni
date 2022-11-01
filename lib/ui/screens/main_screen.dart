@@ -6,6 +6,7 @@ import 'package:ecommerce/ui/screens/home_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +41,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     });
 
     return Scaffold(
+/*
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -58,8 +60,17 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           ),
         ],
       ),
-      body: _buildChild(_currentIndex),
-      bottomNavigationBar: CupertinoTabBar(
+*/
+      body: _buildChild(maintainState: true),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 8,
+        type: BottomNavigationBarType.fixed,
+        selectedIconTheme: const IconThemeData(color: Colors.blueAccent),
+        unselectedIconTheme: IconThemeData(
+          color: Colors.grey[500],
+        ),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: _currentIndex,
         iconSize: 22,
         onTap: (index) {
@@ -69,14 +80,17 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         },
         items: [
           const BottomNavigationBarItem(
+            label: 'Home',
             icon: FaIcon(FontAwesomeIcons.houseUser),
           ),
           const BottomNavigationBarItem(
+            label: 'Prodotti',
             icon: FaIcon(FontAwesomeIcons.store),
           ),
           BottomNavigationBarItem(
+            label: 'Carrello',
             icon: Badge(
-              badgeColor: Colors.blueAccent,
+              badgeColor: Colors.blue,
               badgeContent: Text(
                 value,
                 style: const TextStyle(fontSize: 10, color: Colors.white),
@@ -86,6 +100,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             ),
           ),
           const BottomNavigationBarItem(
+            label: 'Profilo',
             icon: FaIcon(FontAwesomeIcons.user),
           ),
         ],
@@ -93,18 +108,30 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     );
   }
 
-  _buildChild(int currentIndex) {
-    switch (currentIndex) {
-      case 0:
-        return const HomeScreen();
-      case 1:
-        return const ProductsScreen();
-      case 2:
-        return const CartScreen();
-      case 3:
-        return const ProfileScreen();
-      default:
-        return const HomeScreen();
+  _buildChild({required bool maintainState}) {
+    if (maintainState) {
+      return IndexedStack(
+        index: _currentIndex,
+        children: const [
+          HomeScreen(),
+          ProductsScreen(),
+          CartScreen(),
+          ProfileScreen(),
+        ],
+      );
+    } else {
+      switch (_currentIndex) {
+        case 0:
+          return const HomeScreen();
+        case 1:
+          return const ProductsScreen();
+        case 2:
+          return const CartScreen();
+        case 3:
+          return const ProfileScreen();
+        default:
+          return const HomeScreen();
+      }
     }
   }
 }
