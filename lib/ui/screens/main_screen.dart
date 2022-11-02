@@ -1,13 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
-import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
-import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/products_screen.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

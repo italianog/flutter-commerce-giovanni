@@ -42,7 +42,8 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
         for (var i = 0; i < state.length; i++)
           if (i == foundIndex)
             CartProduct(
-                product: state[i].product, quantity: state[i].quantity + 1)
+                product: state[i].product,
+                quantity: state[i].quantity + (quantity ?? 1))
           else
             state[i]
       ];
