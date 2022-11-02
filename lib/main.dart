@@ -17,7 +17,7 @@ import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/otp_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
-import 'package:ecommerce/ui/screens/products_screen.dart';
+import 'package:ecommerce/ui/screens/products_main.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
@@ -158,7 +158,6 @@ class MyApp extends ConsumerWidget {
         '/': (context) => const MainScreen(),
         FavoritesScreen.routeName: (context) => const FavoritesScreen(),
         SplashScreen.routeName: (context) => const SplashScreen(),
-        ProductsScreen.routeName: (context) => const ProductsScreen(),
         ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
         SignInScreen.routeName: (context) => const SignInScreen(),
         SignUpScreen.routeName: (context) => const SignUpScreen(),
@@ -178,6 +177,7 @@ class MyApp extends ConsumerWidget {
         OrderDetailScreen.routeName: (context) => const OrderDetailScreen(),
         OrderResultScreen.routeName: (context) => const OrderResultScreen(),
         EditProfile.routeName: (context) => const EditProfile(),
+        ProductsMain.routeName: (context) => const ProductsMain()
       },
     );
   }

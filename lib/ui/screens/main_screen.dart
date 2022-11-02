@@ -1,8 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
-import 'package:ecommerce/ui/screens/products_screen.dart';
+import 'package:ecommerce/ui/screens/products_main.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   String value = '0';
   @override
   Widget build(BuildContext context) {
+    final page = ref.watch(navigationProvider);
     ref.listen(cartProvider, (previous, next) {
       int count = 0;
       for (final element in next) {
@@ -57,7 +59,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ],
       ),
 */
-      body: _buildChild(maintainState: true),
+      body: _buildChild(maintainState: true, page: page),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 8,
         type: BottomNavigationBarType.fixed,
@@ -67,11 +69,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        currentIndex: _currentIndex,
+        currentIndex: page,
         iconSize: 22,
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            ref.read(navigationProvider.notifier).changePage(index);
           });
         },
         items: [
@@ -104,23 +106,23 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     );
   }
 
-  _buildChild({required bool maintainState}) {
+  _buildChild({required bool maintainState, int? page}) {
     if (maintainState) {
       return IndexedStack(
-        index: _currentIndex,
+        index: page,
         children: const [
           HomeScreen(),
-          ProductsScreen(),
+          ProductsMain(),
           CartScreen(),
           ProfileScreen(),
         ],
       );
     } else {
-      switch (_currentIndex) {
+      switch (page) {
         case 0:
           return const HomeScreen();
         case 1:
-          return const ProductsScreen();
+          return const ProductsMain();
         case 2:
           return const CartScreen();
         case 3:

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,8 +49,8 @@ class _CartTileState extends ConsumerState<CartTile> {
             flex: 3,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: widget.product.product.image,
+              child: Image.asset(
+                widget.product.product.image,
               ),
             ),
           ),

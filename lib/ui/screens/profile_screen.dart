@@ -25,104 +25,94 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final user = ref.watch(authProvider);
     return Scaffold(
+      backgroundColor: AppColors.backgroundGrey,
       appBar: AppBar(
         title: const Text('Profilo'),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: AppColors.backgroundGrey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 24,
-                ),
-                if (user != null) const UserData(),
-                if (user != null)
-                  ProfileItem(
-                    icon: Icons.person,
-                    label: 'Modifica profilo',
-                    onTap: () {
-                      Navigator.of(context).pushNamed(EditProfile.routeName);
-                    },
-                  ),
-                if (user != null)
-                  ProfileItem(
-                    icon: FontAwesomeIcons.message,
-                    label: 'Notifiche',
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(NotificationsScreen.routeName);
-                    },
-                  ),
-                if (user != null)
-                  ProfileItem(
-                    icon: FontAwesomeIcons.addressBook,
-                    label: 'Gestione indirizzi',
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(AddressesScreen.routeName);
-                    },
-                  ),
-                if (user != null)
-                  ProfileItem(
-                    icon: FontAwesomeIcons.dollarSign,
-                    label: 'Gestione ordini',
-                    onTap: () {
-                      Navigator.of(context).pushNamed(OrdersScreen.routeName);
-                    },
-                  ),
-                if (user != null)
-                  ProfileItem(
-                    icon: Icons.favorite,
-                    label: 'I tuoi preferiti',
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(FavoritesScreen.routeName);
-                    },
-                  ),
-                const SizedBox(
-                  height: 32,
-                ),
-                ProfileItem(
-                  icon: FontAwesomeIcons.shield,
-                  label: 'Termini e condizioni',
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(TermsAndConditionsScreen.routeName);
-                  },
-                ),
-                ProfileItem(
-                  icon: FontAwesomeIcons.lock,
-                  label: 'Privacy Policy',
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(PrivacyPolicyScreen.routeName);
-                  },
-                ),
-                if (user == null)
-                  ProfileItem(
-                    icon: FontAwesomeIcons.arrowRightFromBracket,
-                    label: 'Accedi',
-                    onTap: () {
-                      // ref.read(authProvider.notifier).login();
-                      Navigator.of(context).pushNamed(SignInScreen.routeName);
-                    },
-                  )
-                else
-                  ProfileItem(
-                    icon: FontAwesomeIcons.arrowRightFromBracket,
-                    label: 'Logout',
-                    onTap: () {
-                      ref.read(authProvider.notifier).logout();
-                    },
-                  ),
-                const SizedBox(
-                  height: 250,
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 8,
             ),
-          ),
+            if (user != null) const UserData(),
+            if (user != null)
+              ProfileItem(
+                icon: Icons.person,
+                label: 'Modifica profilo',
+                onTap: () {
+                  Navigator.of(context).pushNamed(EditProfile.routeName);
+                },
+              ),
+            if (user == null)
+              ProfileItem(
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                label: 'Accedi',
+                onTap: () {
+                  // ref.read(authProvider.notifier).login();
+                  Navigator.of(context).pushNamed(SignInScreen.routeName);
+                },
+              )
+            else
+              ProfileItem(
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                label: 'Logout',
+                onTap: () {
+                  ref.read(authProvider.notifier).logout();
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.message,
+                label: 'Notifiche',
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(NotificationsScreen.routeName);
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.addressBook,
+                label: 'Gestione indirizzi',
+                onTap: () {
+                  Navigator.of(context).pushNamed(AddressesScreen.routeName);
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.dollarSign,
+                label: 'Gestione ordini',
+                onTap: () {
+                  Navigator.of(context).pushNamed(OrdersScreen.routeName);
+                },
+              ),
+            if (user != null)
+              ProfileItem(
+                icon: Icons.favorite,
+                label: 'I tuoi preferiti',
+                onTap: () {
+                  Navigator.of(context).pushNamed(FavoritesScreen.routeName);
+                },
+              ),
+            ProfileItem(
+              icon: FontAwesomeIcons.shield,
+              label: 'Termini e condizioni',
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(TermsAndConditionsScreen.routeName);
+              },
+            ),
+            ProfileItem(
+              icon: FontAwesomeIcons.lock,
+              label: 'Privacy Policy',
+              onTap: () {
+                Navigator.of(context).pushNamed(PrivacyPolicyScreen.routeName);
+              },
+            ),
+            const SizedBox(
+              height: 250,
+            )
+          ],
         ),
       ),
     );

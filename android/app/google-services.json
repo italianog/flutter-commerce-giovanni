@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "163020965558",
+    "firebase_url": "https://flutter-ecommerce-fed8e-default-rtdb.firebaseio.com",
     "project_id": "flutter-ecommerce-fed8e",
     "storage_bucket": "flutter-ecommerce-fed8e.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "163020965558-t1cnr47dco2278imjiup8hp5e5sm9vvv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "163020965558-lb81n25f6gh6alrch766u56r0tniub6c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.giovanniitaliano.ecommerce"
+              }
             }
           ]
         }
