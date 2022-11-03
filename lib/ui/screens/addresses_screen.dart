@@ -1,3 +1,4 @@
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,7 +26,7 @@ class _AddressesScreenState extends ConsumerState<AddressesScreen> {
         onPressed: () {
           Navigator.of(context).pushNamed(AddressFormScreen.routeName);
         },
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.primaryColor,
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(

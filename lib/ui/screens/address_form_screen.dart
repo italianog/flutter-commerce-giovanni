@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/address.dart';
+import '../widgets/buttons/primary_buttons.dart';
 
 class AddressFormScreen extends ConsumerStatefulWidget {
   const AddressFormScreen({
@@ -105,14 +106,13 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                 const SizedBox(
                   height: 50,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _formKey.currentState!.validate();
-                    },
-                    child: Text(edit ? 'Modifica' : 'Conferma'),
-                  ),
+                PrimaryButton(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  text: (edit ? 'Modifica' : 'Conferma'),
                 ),
               ],
             ),
