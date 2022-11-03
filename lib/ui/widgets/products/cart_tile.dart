@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -181,7 +182,7 @@ class _CouponTileState extends ConsumerState<CouponTile> {
       title: Text(widget.coupon),
       subtitle: const Text('Coupon inserito'),
       trailing: IconButton(
-        color: Colors.green,
+        color: AppColors.primaryColor,
         icon: const Icon(
           Icons.delete,
         ),

@@ -19,7 +19,7 @@ class _PreviewProductsListState extends ConsumerState<PreviewProductsList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 175,
+      height: 170,
       child: ListView.separated(
           clipBehavior: Clip.none,
           shrinkWrap: true,
@@ -47,7 +47,7 @@ class ProductPreview extends StatelessWidget {
             .pushNamed(ProductDetailScreen.routeName, arguments: product);
       },
       child: Container(
-        padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
+        padding: const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 4),
         width: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -84,13 +84,12 @@ class ProductPreview extends StatelessWidget {
             Text(
               product.name.capitalize(),
               textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
-            ),
-            const SizedBox(
-              height: 8,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

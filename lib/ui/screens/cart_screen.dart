@@ -81,7 +81,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Il tuo carrello'),
+                    const Text(
+                      'Il tuo carrello',
+                      style: TextStyle(fontSize: 20),
+                    ),
                     if (ref.read(cartProvider).isNotEmpty)
                       ElevatedButton(
                           style: ButtonStyle(
