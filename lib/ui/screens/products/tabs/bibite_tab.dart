@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../fakedb/products.dart';
 import '../../../../models/product.dart';
+import '../../../widgets/products/item_grid_tile.dart';
 
 class BibiteTab extends StatelessWidget {
   const BibiteTab({Key? key}) : super(key: key);

@@ -5,13 +5,14 @@ import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
 import 'package:ecommerce/ui/screens/products_main.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
-  static const routeName = '/main-screem';
+  static const routeName = '/';
 
   @override
   ConsumerState<MainScreen> createState() => _MainScreenState();
@@ -63,7 +64,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 8,
         type: BottomNavigationBarType.fixed,
-        selectedIconTheme: const IconThemeData(color: Colors.blueAccent),
+        selectedIconTheme: const IconThemeData(color: AppColors.primaryColor),
         unselectedIconTheme: IconThemeData(
           color: Colors.grey[500],
         ),
@@ -88,7 +89,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           BottomNavigationBarItem(
             label: 'Carrello',
             icon: Badge(
-              badgeColor: Colors.blue,
+              badgeColor: AppColors.primaryColor,
               badgeContent: Text(
                 value,
                 style: const TextStyle(fontSize: 10, color: Colors.white),

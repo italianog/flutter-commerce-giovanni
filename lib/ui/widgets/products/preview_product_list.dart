@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/fakedb/products.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import '../../../models/product.dart';
 
 class PreviewProductsList extends ConsumerStatefulWidget {
@@ -14,52 +16,20 @@ class PreviewProductsList extends ConsumerStatefulWidget {
 }
 
 class _PreviewProductsListState extends ConsumerState<PreviewProductsList> {
-  final List<Product> _products = const [
-    Product(
-      name: 'CHRONOGRAPH BLUE ORANGE',
-      id: 1,
-      price: 299.99,
-      promotionalPrice: 280.99,
-      isAvailable: true,
-      availableQuantity: 10,
-      image:
-          'https://www.lilienthal.berlin/media/image/14/64/43/C01-108-B023EB_010.jpg',
-    ),
-    Product(
-      name: 'CHRONOGRAPH BLUE ORANGE',
-      id: 1,
-      price: 299.99,
-      promotionalPrice: 280.99,
-      isAvailable: true,
-      availableQuantity: 10,
-      image:
-          'https://www.lilienthal.berlin/media/image/14/64/43/C01-108-B023EB_010.jpg',
-    ),
-    Product(
-      name: 'CHRONOGRAPH BLUE ORANGE',
-      id: 1,
-      price: 299.99,
-      promotionalPrice: 280.99,
-      isAvailable: true,
-      availableQuantity: 10,
-      image:
-          'https://www.lilienthal.berlin/media/image/14/64/43/C01-108-B023EB_010.jpg',
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160,
+      height: 175,
       child: ListView.separated(
           clipBehavior: Clip.none,
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) =>
-              ProductPreview(product: _products[index]),
+              ProductPreview(product: FakeDB.products[index]),
           separatorBuilder: (context, index) => const SizedBox(
                 width: 32,
               ),
-          itemCount: _products.length),
+          itemCount: FakeDB.products.length),
     );
   }
 }
@@ -77,7 +47,8 @@ class ProductPreview extends StatelessWidget {
             .pushNamed(ProductDetailScreen.routeName, arguments: product);
       },
       child: Container(
-        width: 150,
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
+        width: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -85,8 +56,8 @@ class ProductPreview extends StatelessWidget {
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
-              blurRadius: 7,
-              offset: const Offset(0, 0), // changes position of shadow
+              blurRadius: 12,
+              offset: const Offset(0, 2), // changes position of shadow
             ),
           ],
         ),
@@ -97,9 +68,14 @@ class ProductPreview extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              child: CachedNetworkImage(
-                imageUrl: product.image,
-                fit: BoxFit.fitWidth,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 70,
+                ),
+                child: Image.asset(
+                  product.image,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
             const SizedBox(
@@ -113,6 +89,24 @@ class ProductPreview extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  NumberFormat.currency(
+                          locale: 'it', symbol: '€', decimalDigits: 2)
+                      .format(product.price),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.favorite_border),
+                )
+              ],
+            )
           ],
         ),
       ),

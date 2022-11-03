@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const backgroundGrey = Color(0xFFf8f4f4);
+  static const primaryColor = Colors.orange;
 }
 
 class AppShadows {

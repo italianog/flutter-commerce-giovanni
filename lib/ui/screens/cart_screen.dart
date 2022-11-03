@@ -158,18 +158,20 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         onPressed: deleteCoupon,
                         icon: const Icon(
                           Icons.delete_outline,
-                          color: Colors.green,
+                          color: AppColors.primaryColor,
                         )),
-                    hintStyle: const TextStyle(color: Colors.green),
-                    labelStyle: const TextStyle(color: Colors.green),
+                    hintStyle: const TextStyle(color: AppColors.primaryColor),
+                    labelStyle: const TextStyle(color: AppColors.primaryColor),
                     border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 1.0),
+                      borderSide:
+                          BorderSide(color: AppColors.primaryColor, width: 1.0),
                     ),
                     enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 1.0),
+                      borderSide:
+                          BorderSide(color: AppColors.primaryColor, width: 1.0),
                     ),
                     focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
+                      borderSide: BorderSide(color: AppColors.primaryColor),
                     ),
                     labelText: 'Coupon',
                   ),
@@ -179,8 +181,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          AppColors.primaryColor)),
                   onPressed: () {
                     validateCoupon();
                   },

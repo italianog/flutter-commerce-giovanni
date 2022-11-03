@@ -1,10 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/fakedb/products.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/providers/navigation_provider.dart';
+import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
+import '../widgets/buttons/primary_buttons.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
@@ -18,10 +21,9 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Product? _product;
   final bool _showMore = false;
-  String? _selectedSize;
-  String? _selectedColor;
   int _selectedQty = 1;
   bool _isFavorite = false;
+  Bibite? _bibite = Bibite.cocacola;
 
   @override
   void initState() {
@@ -35,6 +37,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      persistentFooterButtons: [
+        PrimaryButton(
+          onTap: () {
+            ref.read(navigationProvider.notifier).changePage(2);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                MainScreen.routeName, (route) => false);
+          },
+          text: 'Vai al checkout',
+        )
+      ],
       appBar: AppBar(
         title: const Text('Prodotto'),
       ),
@@ -51,9 +63,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.8,
                       maxHeight: MediaQuery.of(context).size.height * 0.4),
-                  child: CachedNetworkImage(
+                  child: Image.asset(
+                    _product!.image,
                     width: double.infinity,
-                    imageUrl: _product!.image,
                   ),
                 ),
               ),
@@ -110,31 +122,24 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             const SizedBox(
               height: 16,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 50,
-              child: SizeBoxes(
-                onSelected: (value) {
-                  _selectedSize = value;
-                },
-              ),
-            ),
+            ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => RadioListTile<Bibite>(
+                      title: const Text('Cocacola'),
+                      value: Bibite.cocacola,
+                      groupValue: _bibite,
+                      onChanged: (Bibite? value) {
+                        setState(() {
+                          _bibite = value;
+                        });
+                      },
+                    ),
+                separatorBuilder: (context, index) => const SizedBox(
+                      height: 12,
+                    ),
+                itemCount: 1),
             const SizedBox(
-              height: 32,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 50,
-              child: ColorBoxes(
-                onSelected: (value) {
-                  setState(() {
-                    _selectedColor = value;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 32,
+              height: 8,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -186,17 +191,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       ),
                       onPressed: () {
                         ref.read(cartProvider.notifier).addProductToCart(
-                            product: _product!,
-                            quantity: _selectedQty,
-                            size: _selectedSize,
-                            color: _selectedColor);
+                              product: _product!,
+                              quantity: _selectedQty,
+                            );
                         var snackBar = SnackBar(
                           content: Text(
                               'Hai aggiunto al carrello: ${_product?.name}'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        print('$_selectedSize $_selectedColor $_selectedQty');
-                        ;
                       },
                     ),
                   )

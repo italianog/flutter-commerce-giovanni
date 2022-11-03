@@ -49,8 +49,12 @@ class _CartTileState extends ConsumerState<CartTile> {
             flex: 3,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                widget.product.product.image,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 120),
+                child: Image.asset(
+                  widget.product.product.image,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
