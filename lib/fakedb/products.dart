@@ -34,13 +34,17 @@ class FakeDB {
         availableQuantity: 100,
         category: 'bibite',
         image: 'assets/images/sprite.png'),
+    Product(
+        name: 'Patatine Fritte',
+        id: 10,
+        price: 2.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'altro',
+        image: 'assets/images/fries.png'),
   ];
 
-  static List<Product> getPanini() {
-    return products.where((element) => element.category == 'panini').toList();
-  }
-
-  static List<Product> getBibite() {
-    return products.where((element) => element.category == 'bibite').toList();
+  static List<Product> getProductsByCategory(String category) {
+    return products.where((element) => element.category == category).toList();
   }
 }

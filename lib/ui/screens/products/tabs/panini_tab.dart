@@ -24,9 +24,10 @@ class PaniniTab extends StatelessWidget {
               crossAxisSpacing: 32,
               mainAxisExtent: 250, // <== change the height to fit your needs
             ),
-            itemCount: FakeDB.getPanini().length,
+            itemCount: FakeDB.getProductsByCategory('panini').length,
             itemBuilder: (context, index) {
-              final List<Product> products = FakeDB.getPanini();
+              final List<Product> products =
+                  FakeDB.getProductsByCategory('panini');
               return ItemGridTile(
                 product: products[index],
               );

@@ -23,14 +23,10 @@ import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:ecommerce/ui/screens/splash_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
-import 'package:ecommerce/ui/theme/themes.dart';
-import 'package:ecommerce/ui/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -152,7 +148,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ref.read(themeProvider),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
-      initialRoute: OnBoardingScreen.routeName,
+      initialRoute: '/',
       themeMode: ThemeMode.light,
       routes: {
         '/': (context) => const MainScreen(),
