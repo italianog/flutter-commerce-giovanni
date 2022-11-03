@@ -84,7 +84,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           ),
           const BottomNavigationBarItem(
             label: 'Prodotti',
-            icon: FaIcon(FontAwesomeIcons.store),
+            icon: FaIcon(
+              FontAwesomeIcons.burger,
+              size: 26,
+            ),
           ),
           BottomNavigationBarItem(
             label: 'Carrello',
