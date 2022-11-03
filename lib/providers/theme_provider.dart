@@ -7,7 +7,17 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   ThemeNotifier()
       : super(AppThemes.lightTheme.copyWith(
             primaryColor: Colors.orange,
-            accentColor: AppColors.primaryColor,
+            /*        inputDecorationTheme: InputDecorationTheme(
+              iconColor: AppColors.primaryColor,
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primaryColor)),
+              labelStyle: TextStyle(color: AppColors.primaryColor),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.primaryColor),
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primaryColor)),
+            ),*/
             radioTheme: RadioThemeData(
                 fillColor: MaterialStateProperty.all(AppColors.primaryColor))));
 

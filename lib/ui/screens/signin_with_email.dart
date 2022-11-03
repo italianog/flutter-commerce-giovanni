@@ -1,4 +1,7 @@
 import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/ui/screens/sign_up_screen.dart';
+import 'package:ecommerce/ui/widgets/buttons/primary_buttons.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -91,22 +94,53 @@ class _SignInWithEmailState extends ConsumerState<SignInWithEmail> {
                   ),
                 ),
               ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: MaterialButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      tryLogin();
-                    }
-                  },
-                  color: Colors.blue,
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
+              const SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  //TODO screen recupera password
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text(
+                      'Password dimenticata?',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                  ],
                 ),
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              RichText(
+                text: TextSpan(
+                    text: 'Non hai ancora un account? ',
+                    style: const TextStyle(color: Colors.black87),
+                    children: [
+                      TextSpan(
+                        text: 'Registrati',
+                        style: const TextStyle(
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Navigator.of(context).pushNamedAndRemoveUntil(
+                            //     SignUpScreen.routeName, (route) => false);
+                            Navigator.of(context)
+                                .pushNamed(SignUpScreen.routeName);
+                          },
+                      )
+                    ]),
+              ),
+              const Spacer(),
+              PrimaryButton(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    tryLogin();
+                  }
+                },
+                text: 'Login',
               ),
               const SizedBox(
                 height: 32,
