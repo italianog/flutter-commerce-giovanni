@@ -55,9 +55,42 @@ class FakeDB {
         availableQuantity: 100,
         category: 'altro',
         image: 'assets/images/fries.png'),
+    Product(
+        rating: 5,
+        name: 'Happy Meal Menu',
+        description: 'Perfetto per i tuoi bambini',
+        id: 100,
+        price: 6.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/happy_meal.png'),
+    Product(
+        rating: 3.49,
+        name: 'Bagel con Bacon',
+        description: 'Perfetto per uno spuntino',
+        id: 100,
+        price: 2.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/bacon_bagel.png'),
+    Product(
+        rating: 3.49,
+        name: 'Toast con Prosciutto',
+        description: 'Perfetto per uno spuntino',
+        id: 100,
+        price: 2.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/toast.png'),
   ];
 
-  static List<Product> getProductsByCategory(String category) {
+  static List<Product> getProductsByCategory({
+    required String category,
+    String? nameFilter,
+  }) {
     return products.where((element) => element.category == category).toList();
   }
 }

@@ -22,10 +22,10 @@ class BibiteTab extends StatelessWidget {
               crossAxisSpacing: 32,
               mainAxisExtent: 250, // <== change the height to fit your needs
             ),
-            itemCount: FakeDB.getProductsByCategory('bibite').length,
+            itemCount: FakeDB.getProductsByCategory(category: 'bibite').length,
             itemBuilder: (context, index) {
               final List<Product> products =
-                  FakeDB.getProductsByCategory('bibite');
+                  FakeDB.getProductsByCategory(category: 'bibite');
               return ItemGridTile(
                 product: products[index],
               );

@@ -1,20 +1,59 @@
 import 'package:ecommerce/fakedb/products.dart';
-import 'package:ecommerce/providers/cart_provider.dart';
-import 'package:ecommerce/ui/theme/app_colors.dart';
+import 'package:ecommerce/ui/widgets/search/search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../models/product.dart';
 import '../../../widgets/products/item_grid_tile.dart';
 
-class PaniniTab extends StatelessWidget {
+class PaniniTab extends StatefulWidget {
   const PaniniTab({Key? key}) : super(key: key);
+
+  @override
+  State<PaniniTab> createState() => _PaniniTabState();
+}
+
+class _PaniniTabState extends State<PaniniTab> {
+  String? _filterName;
+  List<Product> _products = [];
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _products = FakeDB.getProductsByCategory(category: 'panini');
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SearchBar(
+          controller: _controller,
+          onDelete: () {
+            _filterName = null;
+            _products = FakeDB.getProductsByCategory(category: 'panini');
+            _controller.clear();
+            setState(() {});
+          },
+          onChanged: (value) {
+            setState(() {
+              if (value != null && value.isEmpty) {
+                _products = FakeDB.getProductsByCategory(category: 'panini');
+              } else {
+                _filterName = value;
+                _products = _products
+                    .where((element) => element.name
+                        .toLowerCase()
+                        .contains(_filterName!.toLowerCase()))
+                    .toList();
+              }
+            });
+          },
+        ),
+        const SizedBox(
+          height: 8,
+        ),
         Expanded(
           child: GridView.builder(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -25,12 +64,10 @@ class PaniniTab extends StatelessWidget {
               crossAxisSpacing: 32,
               mainAxisExtent: 250, // <== change the height to fit your needs
             ),
-            itemCount: FakeDB.getProductsByCategory('panini').length,
+            itemCount: _products.length,
             itemBuilder: (context, index) {
-              final List<Product> products =
-                  FakeDB.getProductsByCategory('panini');
               return ItemGridTile(
-                product: products[index],
+                product: _products[index],
               );
             },
           ),

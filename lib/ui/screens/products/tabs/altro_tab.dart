@@ -22,10 +22,10 @@ class AltroTab extends StatelessWidget {
               crossAxisSpacing: 32,
               mainAxisExtent: 250, // <== change the height to fit your needs
             ),
-            itemCount: FakeDB.getProductsByCategory('altro').length,
+            itemCount: FakeDB.getProductsByCategory(category: 'altro').length,
             itemBuilder: (context, index) {
               final List<Product> products =
-                  FakeDB.getProductsByCategory('altro');
+                  FakeDB.getProductsByCategory(category: 'altro');
               return ItemGridTile(
                 product: products[index],
               );
