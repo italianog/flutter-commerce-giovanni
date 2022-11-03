@@ -24,6 +24,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _selectedQty = 1;
   bool _isFavorite = false;
   Bibite? _bibite = Bibite.cocacola;
+  String value = '0';
 
   @override
   void initState() {
@@ -38,14 +39,27 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       persistentFooterButtons: [
-        PrimaryButton(
-          onTap: () {
-            ref.read(navigationProvider.notifier).changePage(2);
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                MainScreen.routeName, (route) => false);
-          },
-          text: 'Vai al checkout',
-        )
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Expanded(
+              child: PrimaryButton(
+                onTap: () {
+                  ref.read(navigationProvider.notifier).changePage(2);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      MainScreen.routeName, (route) => false);
+                },
+                text: 'Vai al checkout',
+              ),
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+          ],
+        ),
       ],
       appBar: AppBar(
         title: const Text('Prodotto'),
@@ -119,7 +133,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 });
               },
             ),
-            const SizedBox(
+            /*   const SizedBox(
               height: 16,
             ),
             ListView.separated(
@@ -137,7 +151,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 separatorBuilder: (context, index) => const SizedBox(
                       height: 12,
                     ),
-                itemCount: 1),
+                itemCount: 1),*/
             const SizedBox(
               height: 8,
             ),

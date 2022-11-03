@@ -29,6 +29,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
         products: [
           const CartProduct(
               product: Product(
+                  rating: 3,
                   name: 'Prova',
                   price: 100,
                   id: 1,

@@ -1,18 +1,19 @@
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../theme/text_styles.dart';
-import '../widgets/card/cards.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../providers/navigation_provider.dart';
 import '../widgets/products/preview_product_list.dart';
+import '../widgets/row_title.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final double _pageHorizontalPadding = 16;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,13 +24,53 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               height: 20,
             ),
-            Padding(
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.primaryColor,
+              ),
+              child: Row(
+                children: [
+                  const Expanded(
+                    flex: 7,
+                    child: Text(
+                      'Bentornato Gaetano,\ncosa desideri ordinare oggi? ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: SizedBox(
+                        child: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      height: 200,
+                    )),
+                  )
+                ],
+              ),
+            ),
+            RowTitle(
+              title: 'Prodotti in evidenza',
+              onTap: () {
+                ref.read(navigationProvider.notifier).changePage(1);
+              },
+            ),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: PreviewProductsList(),
+            ),
+            const SizedBox(
+              height: 32,
             ),
           ],
         ),

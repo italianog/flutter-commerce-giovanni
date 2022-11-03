@@ -84,6 +84,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     const Text('Il tuo carrello'),
                     if (ref.read(cartProvider).isNotEmpty)
                       ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black)),
                           onPressed: () {
                             ref.read(cartProvider.notifier).emptyCart();
                             var snackBar = const SnackBar(

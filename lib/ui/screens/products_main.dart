@@ -19,6 +19,7 @@ class ProductsMain extends ConsumerStatefulWidget {
 class _ProductsMainState extends ConsumerState<ProductsMain>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class _ProductsMainState extends ConsumerState<ProductsMain>
         )
       ],
       appBar: AppBar(
+        toolbarHeight: 10,
         elevation: 0,
         bottom: TabBar(
           padding: const EdgeInsets.only(bottom: 8),

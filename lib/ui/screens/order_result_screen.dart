@@ -1,8 +1,9 @@
 import 'package:ecommerce/providers/cart_provider.dart';
-import 'package:ecommerce/ui/screens/main_screen.dart';
+import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../theme/app_colors.dart';
 
 class OrderResultScreen extends ConsumerStatefulWidget {
   const OrderResultScreen({
@@ -36,7 +37,9 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
         children: [
           !_loaded
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
                 )
               : Column(
                   children: [
@@ -50,8 +53,13 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       width: double.infinity,
                       child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.primaryColor),
+                          ),
                           onPressed: () {
                             ref.read(cartProvider.notifier).emptyCart();
+                            ref.read(navigationProvider.notifier).changePage(0);
                             Navigator.of(context)
                                 .pushNamedAndRemoveUntil('/', (route) => false);
                           },

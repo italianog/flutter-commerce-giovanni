@@ -8,6 +8,7 @@ class Product {
   final String? category;
   final String? description;
   final String image;
+  final double rating;
 
   const Product({
     required this.name,
@@ -19,6 +20,7 @@ class Product {
     this.category,
     this.description,
     required this.image,
+    required this.rating,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -29,6 +31,7 @@ class Product {
         isAvailable: map['isAvailable'] ?? true,
         image: map['image'],
         availableQuantity: 10,
+        rating: map['rating'] ?? 5.0,
         description: map['description']);
   }
 }
