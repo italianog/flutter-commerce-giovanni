@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/ui/widgets/buttons/primary_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +59,8 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
               ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) => ListTile(
+                        trailing: Text('x ${_order.products[index].quantity}'),
+                        contentPadding: const EdgeInsets.all(16),
                         tileColor: Colors.white,
                         leading: SizedBox(
                           height: 100,
@@ -91,7 +93,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                       NumberFormat.currency(
                               locale: 'it', symbol: '€', decimalDigits: 2)
                           .format(
-                        _order.totalAmount,
+                        FakeDB().getTotalFromOrder(_order),
                       ),
                     )
                   ],

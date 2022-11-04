@@ -14,7 +14,7 @@ import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/otp_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
-import 'package:ecommerce/ui/screens/products_main.dart';
+import 'package:ecommerce/ui/screens/products/products_main.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';

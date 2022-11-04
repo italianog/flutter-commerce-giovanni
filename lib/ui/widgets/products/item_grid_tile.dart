@@ -87,7 +87,11 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
                                   content: Text(
                                       '${widget.product.name} aggiunto al carrello')));
                             },
-                            icon: const Icon(Icons.add_circle)),
+                            icon: const Icon(
+                              Icons.add_circle,
+                              color: AppColors.primaryColor,
+                              size: 32,
+                            )),
                       )
                     ],
                   ),

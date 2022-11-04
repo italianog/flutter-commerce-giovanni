@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ThemeNotifier extends StateNotifier<ThemeData> {
   ThemeNotifier()
       : super(AppThemes.lightTheme.copyWith(
-            primaryColor: Colors.orange,
             /*        inputDecorationTheme: InputDecorationTheme(
               iconColor: AppColors.primaryColor,
               border: OutlineInputBorder(

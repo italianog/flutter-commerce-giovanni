@@ -147,4 +147,12 @@ class FakeDB {
   }) {
     return products.where((element) => element.category == category).toList();
   }
+
+  double getTotalFromOrder(Order order) {
+    double sum = 0;
+    order.products.forEach((element) {
+      sum += element.quantity * element.product.price;
+    });
+    return sum;
+  }
 }

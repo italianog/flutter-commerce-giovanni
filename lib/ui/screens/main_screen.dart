@@ -3,7 +3,7 @@ import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
 import 'package:ecommerce/ui/screens/home_screen.dart';
-import 'package:ecommerce/ui/screens/products_main.dart';
+import 'package:ecommerce/ui/screens/products/products_main.dart';
 import 'package:ecommerce/ui/screens/profile_screen.dart';
 import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';

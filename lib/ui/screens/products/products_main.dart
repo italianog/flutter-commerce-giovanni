@@ -6,7 +6,7 @@ import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widgets/buttons/primary_buttons.dart';
+import '../../widgets/buttons/primary_buttons.dart';
 
 class ProductsMain extends ConsumerStatefulWidget {
   const ProductsMain({Key? key}) : super(key: key);

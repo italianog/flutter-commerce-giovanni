@@ -9,7 +9,7 @@ class AppThemes {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
-      elevation: 2,
+      elevation: 0,
       color: Colors.white,
       iconTheme: IconThemeData(color: Colors.black54),
       centerTitle: true,
