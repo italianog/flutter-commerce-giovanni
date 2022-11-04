@@ -1,19 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    appBarTheme: const AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-      ),
+    appBarTheme: AppBarTheme(
+      systemOverlayStyle: Platform.isAndroid
+          ? const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
+            )
+          : const SystemUiOverlayStyle(),
       elevation: 0,
       color: Colors.white,
-      iconTheme: IconThemeData(color: Colors.black54),
+      iconTheme: const IconThemeData(color: Colors.black54),
       centerTitle: true,
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.black,
       ),
     ),

@@ -91,7 +91,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                       NumberFormat.currency(
                               locale: 'it', symbol: '€', decimalDigits: 2)
                           .format(widget.product.product.promotionalPrice ??
-                              widget.product.product.promotionalPrice),
+                              widget.product.product.price),
                       style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const Spacer(),
