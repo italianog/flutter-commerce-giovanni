@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/ui/screens/change_password.dart';
 import 'package:ecommerce/ui/screens/edit_profile.dart';
 import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
@@ -6,6 +7,7 @@ import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,6 +46,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   Navigator.of(context).pushNamed(EditProfile.routeName);
                 },
               ),
+            if (user != null)
+              ProfileItem(
+                icon: Icons.password,
+                label: 'Cambia password',
+                onTap: () {
+                  Navigator.of(context).pushNamed(ChangePassword.routeName);
+                },
+              ),
             if (user == null)
               ProfileItem(
                 icon: FontAwesomeIcons.arrowRightFromBracket,
@@ -54,14 +64,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 },
               )
             else
-              ProfileItem(
-                icon: FontAwesomeIcons.arrowRightFromBracket,
-                label: 'Logout',
-                onTap: () {
-                  ref.read(authProvider.notifier).logout();
-                },
-              ),
-            if (user != null)
               ProfileItem(
                 icon: FontAwesomeIcons.message,
                 label: 'Notifiche',
@@ -109,6 +111,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Navigator.of(context).pushNamed(PrivacyPolicyScreen.routeName);
               },
             ),
+            if (user != null)
+              ProfileItem(
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                label: 'Logout',
+                onTap: () {
+                  ref.read(authProvider.notifier).logout();
+                },
+              ),
             const SizedBox(
               height: 250,
             )
@@ -163,31 +173,42 @@ class UserData extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(authProvider);
+    final User? user = ref.read(authProvider);
     return Column(
       children: [
-        if (user != null && user.photoURL != null)
-          CircleAvatar(
-            backgroundImage: AssetImage(user.photoURL!),
-            radius: 80,
-          ),
-        const SizedBox(
-          height: 10,
-        ),
         if (user != null)
-          RichText(
-            text: TextSpan(
-              text: 'Ciao ',
-              style: const TextStyle(fontSize: 18, color: Colors.black87),
-              children: <TextSpan>[
-                TextSpan(
-                    text: '${user.email}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 12,
+              ),
+              const CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'),
+                radius: 50,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              RichText(
+                text: TextSpan(
+                    text: 'Bentornato ',
+                    style: const TextStyle(color: Colors.black87, fontSize: 20),
+                    children: [
+                      TextSpan(
+                        text: user.email,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ]),
+              ),
+            ],
           ),
         const SizedBox(
-          height: 32,
+          height: 20,
         ),
       ],
     );

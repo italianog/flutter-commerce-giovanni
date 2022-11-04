@@ -2,6 +2,7 @@ import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/address_form_screen.dart';
 import 'package:ecommerce/ui/screens/addresses_screen.dart';
 import 'package:ecommerce/ui/screens/cart_screen.dart';
+import 'package:ecommerce/ui/screens/change_password.dart';
 import 'package:ecommerce/ui/screens/edit_profile.dart';
 import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
@@ -170,7 +171,8 @@ class MyApp extends ConsumerWidget {
         OrderDetailScreen.routeName: (context) => const OrderDetailScreen(),
         OrderResultScreen.routeName: (context) => const OrderResultScreen(),
         EditProfile.routeName: (context) => const EditProfile(),
-        ProductsMain.routeName: (context) => const ProductsMain()
+        ProductsMain.routeName: (context) => const ProductsMain(),
+        ChangePassword.routeName: (context) => const ChangePassword(),
       },
     );
   }
