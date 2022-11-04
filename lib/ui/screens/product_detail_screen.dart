@@ -1,4 +1,4 @@
-import 'package:ecommerce/fakedb/products.dart';
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';

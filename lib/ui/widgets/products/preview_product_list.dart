@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce/fakedb/products.dart';
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';

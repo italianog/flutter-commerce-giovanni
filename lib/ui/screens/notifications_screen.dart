@@ -1,5 +1,8 @@
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/push_notification.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+  final List<PushNotification> _notifications = FakeDB.notifications;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +30,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: _notifications.length,
               itemBuilder: (context, index) => NotificationListTile(
-                  index: index, read: index % 2 == 0 ? true : false),
+                pushNotification: _notifications[index],
+              ),
             ),
           ],
         ),
@@ -40,23 +45,21 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 class NotificationListTile extends StatelessWidget {
   const NotificationListTile({
     Key? key,
-    required this.index,
-    required this.read,
+    required this.pushNotification,
   }) : super(key: key);
 
-  final int index;
-  final bool read;
+  final PushNotification pushNotification;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(NotificationDetailScreen.routeName, arguments: index);
+        Navigator.of(context).pushNamed(NotificationDetailScreen.routeName,
+            arguments: pushNotification);
       },
       child: Container(
         decoration: BoxDecoration(
-          color: read ? Colors.white : Colors.grey[300],
+          color: pushNotification.read ? Colors.white : Colors.grey[300],
           border: const Border(
             bottom: BorderSide(color: Colors.black26, width: 0.5),
           ),
@@ -64,7 +67,7 @@ class NotificationListTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         child: Row(
           children: [
-            Text('Notifica ${index + 1}'),
+            Text(pushNotification.title),
             const Spacer(),
             const Icon(Icons.chevron_right),
           ],

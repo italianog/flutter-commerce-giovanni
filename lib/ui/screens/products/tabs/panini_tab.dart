@@ -1,4 +1,4 @@
-import 'package:ecommerce/fakedb/products.dart';
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/ui/widgets/search/search_bar.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,5 @@
 import '../models/product.dart';
+import '../models/push_notification.dart';
 
 enum Bibite { cocacola, sprite }
 
@@ -105,6 +106,15 @@ class FakeDB {
         availableQuantity: 100,
         category: 'altro',
         image: 'assets/images/nuggets.png'),
+  ];
+
+  static List<PushNotification> notifications = const [
+    PushNotification(
+        read: false,
+        title: 'Benvenuto nel nuovo e-commerce',
+        body:
+            'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia',
+        type: NotificationTypes.marketing)
   ];
 
   static List<Product> getProductsByCategory({

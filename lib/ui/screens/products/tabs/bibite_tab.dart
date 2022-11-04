@@ -1,7 +1,7 @@
 import 'package:ecommerce/ui/screens/products/tabs/panini_tab.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../fakedb/products.dart';
+import '../../../../fakedb/db.dart';
 import '../../../../models/product.dart';
 import '../../../widgets/products/item_grid_tile.dart';
 
