@@ -59,7 +59,9 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
   double getTotalAmount() {
     double sum = 0;
     for (final product in state) {
-      sum += product.product.price * product.quantity;
+      sum += product.product.promotionalPrice != null
+          ? product.product.promotionalPrice! * product.quantity
+          : product.product.price * product.quantity;
     }
     return sum;
   }

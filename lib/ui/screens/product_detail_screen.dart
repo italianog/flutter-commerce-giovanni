@@ -127,7 +127,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     Text(
                       NumberFormat.currency(
                               locale: 'it', symbol: '€', decimalDigits: 2)
-                          .format(_product?.price),
+                          .format(
+                              _product?.promotionalPrice ?? _product?.price),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

@@ -90,15 +90,20 @@ class _CartTileState extends ConsumerState<CartTile> {
                     Text(
                       NumberFormat.currency(
                               locale: 'it', symbol: '€', decimalDigits: 2)
-                          .format(widget.product.product.price),
+                          .format(widget.product.product.promotionalPrice ??
+                              widget.product.product.promotionalPrice),
                       style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const Spacer(),
                     Text(
                       NumberFormat.currency(
                               locale: 'it', symbol: '€', decimalDigits: 2)
-                          .format(widget.product.product.price *
-                              widget.product.quantity),
+                          .format(widget.product.product.promotionalPrice !=
+                                  null
+                              ? widget.product.product.promotionalPrice! *
+                                  widget.product.quantity
+                              : widget.product.product.price *
+                                  widget.product.quantity),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     )
                   ],
