@@ -1,4 +1,5 @@
 import 'package:ecommerce/fakedb/db.dart';
+import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:ecommerce/ui/widgets/buttons/primary_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,22 +59,33 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
               ),
               ListView.separated(
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => ListTile(
-                        trailing: Text('x ${_order.products[index].quantity}'),
-                        contentPadding: const EdgeInsets.all(16),
-                        tileColor: Colors.white,
-                        leading: SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Image.asset(
-                            _order.products[index].product.image,
-                          ),
+                  itemBuilder: (context, index) => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          boxShadow: [
+                            AppShadows.defaultShadow,
+                          ],
                         ),
-                        title: Text(_order.products[index].product.name),
-                        subtitle: Text(
-                          NumberFormat.currency(
-                                  locale: 'it', symbol: '€', decimalDigits: 2)
-                              .format(_order.products[index].product.price),
+                        child: ListTile(
+                          trailing:
+                              Text('x ${_order.products[index].quantity}'),
+                          contentPadding: const EdgeInsets.all(16),
+                          tileColor: Colors.white,
+                          leading: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Image.asset(
+                              _order.products[index].product.image,
+                            ),
+                          ),
+                          title: Text(_order.products[index].product.name),
+                          subtitle: Text(
+                            NumberFormat.currency(
+                                    locale: 'it', symbol: '€', decimalDigits: 2)
+                                .format(_order.products[index].product.price),
+                          ),
                         ),
                       ),
                   separatorBuilder: (context, index) => const SizedBox(

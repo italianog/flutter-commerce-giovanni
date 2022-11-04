@@ -24,7 +24,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     super.initState();
   }
 
-  int _currentIndex = 0;
   String value = '0';
   @override
   Widget build(BuildContext context) {

@@ -59,7 +59,7 @@ class NotificationListTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: pushNotification.read ? Colors.white : Colors.grey[300],
+          color: pushNotification.read ? Colors.white : Colors.grey[200],
           border: const Border(
             bottom: BorderSide(color: Colors.black26, width: 0.5),
           ),

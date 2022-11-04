@@ -43,9 +43,28 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
                 )
               : Column(
                   children: [
-                    const Center(
-                      child: Text('Ordine effettuato con successo'),
+                    const Icon(
+                      Icons.check_circle,
+                      color: AppColors.primaryColor,
+                      size: 80,
                     ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Center(
+                      child: Text(
+                        'Ordine effettuato con successo',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                        'Il tuo ordine sarà disponibile a breve nel nostro negozio'),
                     const SizedBox(
                       height: 16,
                     ),

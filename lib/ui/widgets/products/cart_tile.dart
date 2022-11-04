@@ -72,9 +72,17 @@ class _CartTileState extends ConsumerState<CartTile> {
                 ),
                 Text(
                   widget.product.product.name,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 4,
+                ),
+                Text(widget.product.product.description ?? ''),
+                const SizedBox(
+                  height: 4,
                 ),
                 Row(
                   children: [

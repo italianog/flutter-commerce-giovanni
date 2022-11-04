@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -83,13 +82,10 @@ class ProductPreview extends StatelessWidget {
             ),
             Text(
               product.name.capitalize(),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

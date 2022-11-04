@@ -85,6 +85,29 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             const SizedBox(
               height: 16,
             ),
+            if (_product?.category == 'altro' || _product?.category == 'bibite')
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Wrap(
+                  spacing: 8,
+                  children: [
+                    Chip(
+                        backgroundColor: Colors.green[400],
+                        label: const Text(
+                          'Vegano',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        )),
+                    const Chip(
+                        backgroundColor: Colors.orangeAccent,
+                        label: Text(
+                          'Gluten Free',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        )),
+                  ],
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(

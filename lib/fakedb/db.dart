@@ -1,5 +1,4 @@
 import 'package:ecommerce/models/order.dart';
-
 import '../models/product.dart';
 import '../models/push_notification.dart';
 
@@ -114,7 +113,13 @@ class FakeDB {
         title: 'Benvenuto nel nuovo e-commerce',
         body:
             'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia',
-        type: NotificationTypes.marketing)
+        type: NotificationTypes.marketing),
+    PushNotification(
+        read: true,
+        title: 'Ricordati di verificare la tua mail',
+        body:
+            'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia',
+        type: NotificationTypes.other)
   ];
 
   static List<Order> orders = [
@@ -150,9 +155,9 @@ class FakeDB {
 
   double getTotalFromOrder(Order order) {
     double sum = 0;
-    order.products.forEach((element) {
+    for (var element in order.products) {
       sum += element.quantity * element.product.price;
-    });
+    }
     return sum;
   }
 }

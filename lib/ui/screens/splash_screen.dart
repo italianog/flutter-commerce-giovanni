@@ -14,12 +14,16 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  void initApplication() {}
+  void initApplication() {
+    ref.read(authProvider.notifier).getCurrentUser();
+  }
 
   @override
   void initState() {
     super.initState();
-    initApplication();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initApplication();
+    });
 
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context)

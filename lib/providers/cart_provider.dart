@@ -26,8 +26,7 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     state = [];
   }
 
-  void addProductToCart(
-      {required Product product, int? quantity, String? color, String? size}) {
+  void addProductToCart({required Product product, int? quantity}) {
     int foundIndex = findProductInCart(product);
     if (foundIndex == -1) {
       state = [
