@@ -26,53 +26,61 @@ class _PaniniTabState extends State<PaniniTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SearchBar(
-          controller: _controller,
-          onDelete: () {
-            _filterName = null;
-            _products = FakeDB.getProductsByCategory(category: 'panini');
-            _controller.clear();
-            setState(() {});
-          },
-          onChanged: (value) {
-            setState(() {
-              if (value != null && value.isEmpty) {
-                _products = FakeDB.getProductsByCategory(category: 'panini');
-              } else {
-                _filterName = value;
-                _products = _products
-                    .where((element) => element.name
-                        .toLowerCase()
-                        .contains(_filterName!.toLowerCase()))
-                    .toList();
-              }
-            });
-          },
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 32,
-              mainAxisExtent: 250, // <== change the height to fit your needs
-            ),
-            itemCount: _products.length,
-            itemBuilder: (context, index) {
-              return ItemGridTile(
-                product: _products[index],
-              );
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Column(
+        children: [
+          SearchBar(
+            controller: _controller,
+            onDelete: () {
+              _filterName = null;
+              _products = FakeDB.getProductsByCategory(category: 'panini');
+              _controller.clear();
+              setState(() {});
+            },
+            onChanged: (value) {
+              setState(() {
+                if (value != null && value.isEmpty) {
+                  _products = FakeDB.getProductsByCategory(category: 'panini');
+                } else {
+                  _filterName = value;
+                  _products = _products
+                      .where((element) => element.name
+                          .toLowerCase()
+                          .contains(_filterName!.toLowerCase()))
+                      .toList();
+                }
+              });
             },
           ),
-        )
-      ],
+          const SizedBox(
+            height: 8,
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 32,
+                mainAxisExtent: 250, // <== change the height to fit your needs
+              ),
+              itemCount: _products.length,
+              itemBuilder: (context, index) {
+                return ItemGridTile(
+                  product: _products[index],
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }

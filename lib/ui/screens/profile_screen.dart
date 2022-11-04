@@ -120,7 +120,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 },
               ),
             const SizedBox(
-              height: 250,
+              height: 80,
             )
           ],
         ),
@@ -184,6 +184,7 @@ class UserData extends ConsumerWidget {
                 height: 12,
               ),
               const CircleAvatar(
+                backgroundColor: Colors.black,
                 backgroundImage: NetworkImage(
                     'https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg'),
                 radius: 50,

@@ -15,12 +15,12 @@ class FavoritesScreen extends ConsumerStatefulWidget {
 class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<Product> _favorites = ref.read(favoritesProvider);
+    final List<Product> favorites = ref.watch(favoritesProvider);
     return Scaffold(
         appBar: AppBar(
           title: const Text('I tuoi preferiti'),
         ),
-        body: _favorites.isEmpty
+        body: favorites.isEmpty
             ? const Center(
                 child: Text('Non hai ancora inserito preferiti'),
               )
@@ -29,8 +29,8 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 shrinkWrap: true,
                 itemBuilder: (context, index) =>
-                    ProductListTile(product: _favorites[index]),
-                itemCount: _favorites.length,
+                    ProductListTile(product: favorites[index]),
+                itemCount: favorites.length,
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 8,
                 ),

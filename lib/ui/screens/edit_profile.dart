@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../widgets/buttons/primary_buttons.dart';
+
 class EditProfile extends ConsumerStatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
   static const routeName = '/edit-profile-screen';
@@ -86,14 +88,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                 },
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Modifica'),
-                ),
+              PrimaryButton(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                text: 'Modifica',
               ),
               const SizedBox(
                 height: 16,

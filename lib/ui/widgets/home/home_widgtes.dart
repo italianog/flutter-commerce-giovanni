@@ -1,10 +1,81 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../theme/app_colors.dart';
 
+class CouponsList extends StatefulWidget {
+  const CouponsList({Key? key}) : super(key: key);
+
+  @override
+  State<CouponsList> createState() => _CouponsListState();
+}
+
+class _CouponsListState extends State<CouponsList> {
+  double activeIndex = 0;
+  final List<CouponBox> coupons = const [
+    CouponBox(
+      text:
+          'Non hai ancora riscattato il tuo primo coupon! Affrettati scade il 31/12/2022',
+      icon: Icons.airplane_ticket_outlined,
+    ),
+    CouponBox(
+      text: 'Coupon #2',
+      icon: Icons.folder_open,
+    ),
+    CouponBox(
+      text: 'Coupon #3',
+      icon: Icons.folder_open,
+    ),
+    CouponBox(
+      text: 'Coupon #4',
+      icon: Icons.folder_open,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 240,
+          child: PageView.builder(
+            itemCount: coupons.length,
+            onPageChanged: (index) {
+              setState(() {
+                activeIndex = index.toDouble();
+              });
+            },
+            itemBuilder: (context, index) => coupons[index],
+          ),
+        ),
+        Center(
+          child: DotsIndicator(
+            position: activeIndex,
+            dotsCount: coupons.length,
+            decorator: DotsDecorator(
+              size: const Size.square(9.0),
+              activeSize: const Size(18.0, 9.0),
+              activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              activeColor: AppColors.primaryColor,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class CouponBox extends StatelessWidget {
-  const CouponBox({Key? key}) : super(key: key);
+  const CouponBox({
+    Key? key,
+    required this.text,
+    required this.icon,
+  }) : super(key: key);
+
+  final String text;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +119,18 @@ class CouponBox extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
+          children: [
             Expanded(
               flex: 7,
               child: Text(
-                'Non hai ancora riscattato il tuo primo coupon! Affrettati scade il 31/12/2022',
-                style: TextStyle(
+                text,
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.w500),
               ),
             ),
-            Expanded(
+            const Expanded(
                 flex: 3,
                 child: Icon(
                   Icons.airplane_ticket,

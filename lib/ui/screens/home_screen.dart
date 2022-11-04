@@ -1,4 +1,5 @@
 import 'package:ecommerce/ui/theme/app_colors.dart';
+import 'package:ecommerce/ui/widgets/products/preview_offers_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,7 +47,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(
               height: 20,
             ),
-            const CouponBox(),
+            const SizedBox(
+              height: 16,
+            ),
+            const CouponsList(),
+            const SizedBox(
+              height: 16,
+            ),
+            RowTitle(
+              title: 'Prodotti in offerta',
+              onTap: () {},
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: PreviewOffersList(),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),

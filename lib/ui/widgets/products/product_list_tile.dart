@@ -1,9 +1,11 @@
+import 'package:ecommerce/providers/favorites_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/product.dart';
 import '../../theme/app_colors.dart';
 
-class ProductListTile extends StatefulWidget {
+class ProductListTile extends ConsumerStatefulWidget {
   const ProductListTile({
     Key? key,
     required this.product,
@@ -12,10 +14,10 @@ class ProductListTile extends StatefulWidget {
   final Product product;
 
   @override
-  State<ProductListTile> createState() => _ProductListTileState();
+  ConsumerState<ProductListTile> createState() => _ProductListTileState();
 }
 
-class _ProductListTileState extends State<ProductListTile> {
+class _ProductListTileState extends ConsumerState<ProductListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +40,16 @@ class _ProductListTileState extends State<ProductListTile> {
             Icons.close,
             size: 30,
           ),
-          onPressed: () {},
+          onPressed: () {
+            ref
+                .read(favoritesProvider.notifier)
+                .removeProductFromFavorites(widget.product.id);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${widget.product.name} rimosso dai preferiti'),
+              ),
+            );
+          },
         ),
       ),
     );

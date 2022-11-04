@@ -107,6 +107,31 @@ class FakeDB {
         image: 'assets/images/nuggets.png'),
   ];
 
+  static List<Product> onSaleProducts = const [
+    Product(
+        rating: 3.49,
+        name: 'Toast con Prosciutto',
+        description: 'Perfetto per uno spuntino',
+        id: 8,
+        price: 2.49,
+        promotionalPrice: 1.99,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/toast.png'),
+    Product(
+        rating: 3.49,
+        name: 'Mc chicken Panino',
+        description: 'Perfetto per uno spuntino al pollo',
+        id: 9,
+        price: 3.49,
+        promotionalPrice: 0.99,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/mcchicken.png'),
+  ];
+
   static List<PushNotification> notifications = const [
     PushNotification(
         read: false,
