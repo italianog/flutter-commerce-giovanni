@@ -163,3 +163,7 @@ Map<String, dynamic> readWindowsDeviceInfo(WindowsDeviceInfo data) {
     'deviceId': data.deviceId,
   };
 }
+
+String fromDatetimeToString(DateTime dateTime) {
+  return '';
+}

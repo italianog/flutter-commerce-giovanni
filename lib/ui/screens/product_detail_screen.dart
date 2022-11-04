@@ -23,7 +23,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   final bool _showMore = false;
   int _selectedQty = 1;
   bool _isFavorite = false;
-  Bibite? _bibite = Bibite.cocacola;
   String value = '0';
 
   @override
