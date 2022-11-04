@@ -1,3 +1,4 @@
+import 'package:ecommerce/providers/favorites_provider.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -104,6 +105,13 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
               onPressed: () {
                 setState(() {
                   _isFavorite = !_isFavorite;
+                  _isFavorite
+                      ? ref
+                          .read(favoritesProvider.notifier)
+                          .addToFavorites(widget.product)
+                      : ref
+                          .read(favoritesProvider.notifier)
+                          .removeProductFromFavorites(widget.product.id);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor:

@@ -1,6 +1,6 @@
 class Product {
   final String name;
-  final int? id;
+  final int id;
   final double price;
   final double? promotionalPrice;
   final bool isAvailable;
