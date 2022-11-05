@@ -250,25 +250,42 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                   Expanded(
                     flex: 8,
-                    child: MaterialButton(
-                      color: Colors.black,
-                      child: const Text(
-                        'Acquista adesso',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      ),
-                      onPressed: () {
-                        ref.read(cartProvider.notifier).addProductToCart(
-                              product: _product!,
-                              quantity: _selectedQty,
-                            );
-                        var snackBar = SnackBar(
-                          content: Text(
-                              'Hai aggiunto al carrello: ${_product?.name}'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                    ),
+                    child: _product?.availableQuantity != 0
+                        ? MaterialButton(
+                            color: Colors.black,
+                            child: const Text(
+                              'Acquista adesso',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            onPressed: () {
+                              ref.read(cartProvider.notifier).addProductToCart(
+                                    product: _product!,
+                                    quantity: _selectedQty,
+                                  );
+                              var snackBar = SnackBar(
+                                content: Text(
+                                    'Hai aggiunto al carrello: ${_product?.name}'),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
+                                color: Colors.deepOrange,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: const Text(
+                              'Spiacente questo prodotto non è attualmente disponibile',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
                   )
                 ],
               ),

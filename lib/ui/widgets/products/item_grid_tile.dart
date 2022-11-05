@@ -88,22 +88,25 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
                           ],
                         ),
                       ),
-                      Expanded(
-                        flex: 4,
-                        child: IconButton(
-                            onPressed: () {
-                              ref.read(cartProvider.notifier).addProductToCart(
-                                  product: widget.product, quantity: 1);
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      '${widget.product.name} aggiunto al carrello')));
-                            },
-                            icon: const Icon(
-                              Icons.add_circle,
-                              color: AppColors.primaryColor,
-                              size: 32,
-                            )),
-                      )
+                      if (widget.product.availableQuantity != 0)
+                        Expanded(
+                          flex: 4,
+                          child: IconButton(
+                              onPressed: () {
+                                ref
+                                    .read(cartProvider.notifier)
+                                    .addProductToCart(
+                                        product: widget.product, quantity: 1);
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        '${widget.product.name} aggiunto al carrello')));
+                              },
+                              icon: const Icon(
+                                Icons.add_circle,
+                                color: AppColors.primaryColor,
+                                size: 32,
+                              )),
+                        )
                     ],
                   ),
                 ),
@@ -141,10 +144,14 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
             )),
             if (widget.product.availableQuantity == 0)
               const Positioned(
-                  right: 2,
+                  right: 4,
                   child: Chip(
+                    backgroundColor: Colors.amber,
                     padding: EdgeInsets.all(0),
-                    label: Text('Non disponibile'),
+                    label: Text(
+                      'Non disponibile',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
                   )),
           ],
         ),
