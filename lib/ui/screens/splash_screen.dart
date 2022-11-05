@@ -42,12 +42,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Stiamo scaldando le piastre...',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryColor,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: const Text(
+            'Stiamo scaldando le piastre...',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryColor,
+            ),
           ),
         ),
         const SizedBox(
