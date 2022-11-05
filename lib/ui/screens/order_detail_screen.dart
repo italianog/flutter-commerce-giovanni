@@ -47,7 +47,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                 height: 16,
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(0),
                 child: Text(
                   'Ordine del ${dateFormat.format(_order.createdAt)}',
                   style: const TextStyle(
@@ -96,10 +96,14 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.zero,
                 child: Row(
                   children: [
-                    const Text('Totale'),
+                    const Text(
+                      'Totale',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
                     const Spacer(),
                     Text(
                       NumberFormat.currency(
@@ -107,6 +111,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                           .format(
                         FakeDB().getTotalFromOrder(_order),
                       ),
+                      style: TextStyle(fontSize: 20),
                     )
                   ],
                 ),

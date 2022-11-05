@@ -1,8 +1,10 @@
+import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
+import 'package:ecommerce/ui/screens/main_screen.dart';
+import 'package:ecommerce/ui/screens/order_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../theme/app_colors.dart';
 
 class OrderResultScreen extends ConsumerStatefulWidget {
@@ -83,6 +85,28 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
                                 .pushNamedAndRemoveUntil('/', (route) => false);
                           },
                           child: const Text('Vai alla home')),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                        ),
+                        onPressed: () {
+                          ref.read(navigationProvider.notifier).changePage(0);
+                          ref.read(cartProvider.notifier).emptyCart();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              OrderDetailScreen.routeName,
+                              ModalRoute.withName(MainScreen.routeName),
+                              arguments: FakeDB.orders[0]);
+                        },
+                        child: const Text('Vai al dettaglio ordine'),
+                      ),
                     )
                   ],
                 ),
