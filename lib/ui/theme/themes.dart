@@ -6,13 +6,7 @@ import 'package:flutter/services.dart';
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    appBarTheme: AppBarTheme(
-      systemOverlayStyle: Platform.isAndroid
-          ? const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.dark,
-            )
-          : const SystemUiOverlayStyle(),
+    appBarTheme: const AppBarTheme(
       elevation: 0,
       color: Colors.white,
       iconTheme: const IconThemeData(color: Colors.black54),
