@@ -138,7 +138,14 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
                   );
                 });
               },
-            ))
+            )),
+            if (widget.product.availableQuantity == 0)
+              const Positioned(
+                  right: 2,
+                  child: Chip(
+                    padding: EdgeInsets.all(0),
+                    label: Text('Non disponibile'),
+                  )),
           ],
         ),
       ),

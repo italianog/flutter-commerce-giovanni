@@ -12,7 +12,7 @@ class FakeDB {
         price: 8.99,
         promotionalPrice: 6.49,
         isAvailable: true,
-        availableQuantity: 100,
+        availableQuantity: 0,
         category: 'panini',
         image: 'assets/images/hamburger.png'),
     Product(
@@ -127,6 +127,26 @@ class FakeDB {
         availableQuantity: 100,
         category: 'panini',
         image: 'assets/images/roller_box.png'),
+    Product(
+        rating: 5.00,
+        name: 'Black Burger',
+        description: 'Perfetto per uno spuntino particolare.',
+        id: 10986,
+        price: 9.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/black_burger.png'),
+    Product(
+        rating: 5.00,
+        name: 'Fanta Zero',
+        description: 'Frizzante, rinfrescante e senza succheri.',
+        id: 10986,
+        price: 2.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'bibite',
+        image: 'assets/images/fanta.png'),
   ];
 
   static List<Product> onSaleProducts =
