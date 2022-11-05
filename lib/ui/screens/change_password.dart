@@ -114,7 +114,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   border: const OutlineInputBorder(),
                   labelText: 'Conferma nuova password',
                   suffixIcon: IconButton(
-                    icon: _hideNewPassword
+                    icon: _hideConfirm
                         ? const Icon(Icons.visibility_off)
                         : const Icon(Icons.visibility),
                     onPressed: () {
@@ -126,7 +126,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
               ),
               const Spacer(),
-              PrimaryButton(onTap: () {}, text: 'Modifica'),
+              PrimaryButton(
+                  onTap: () {
+                    _formKey.currentState!.validate();
+                  },
+                  text: 'Modifica'),
               const SizedBox(
                 height: 16,
               ),

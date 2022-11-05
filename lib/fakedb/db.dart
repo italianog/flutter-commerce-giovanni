@@ -105,6 +105,26 @@ class FakeDB {
         availableQuantity: 100,
         category: 'altro',
         image: 'assets/images/nuggets.png'),
+    Product(
+        rating: 5.00,
+        name: 'Bucket Pollo croccante',
+        description: 'Perfetto per uno spuntino al pollo',
+        id: 10986,
+        price: 4.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'altro',
+        image: 'assets/images/bucket.png'),
+    Product(
+        rating: 5.00,
+        name: 'Rollerbox',
+        description: 'Perfetto per uno spuntino.',
+        id: 10986,
+        price: 6.49,
+        isAvailable: true,
+        availableQuantity: 100,
+        category: 'panini',
+        image: 'assets/images/roller_box.png'),
   ];
 
   static List<Product> onSaleProducts = const [

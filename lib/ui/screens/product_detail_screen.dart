@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -24,10 +27,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _selectedQty = 1;
   bool _isFavorite = false;
   String value = '0';
+  int randomNumber = 0;
 
   @override
   void initState() {
     super.initState();
+    Random random = Random();
+    randomNumber = random.nextInt(100);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _product = ModalRoute.of(context)!.settings.arguments as Product;
       setState(() {});
@@ -109,7 +115,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 ),
               ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -139,6 +145,31 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                 ],
               ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  RatingBarIndicator(
+                    rating: _product!.rating,
+                    itemBuilder: (context, index) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    itemCount: 5,
+                    itemSize: 30.0,
+                    unratedColor: Colors.amber.withAlpha(50),
+                    direction: Axis.horizontal,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text('($randomNumber)')
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 8,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
