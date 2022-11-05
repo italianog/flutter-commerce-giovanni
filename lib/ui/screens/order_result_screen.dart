@@ -5,6 +5,7 @@ import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/order_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../models/order.dart';
 import '../theme/app_colors.dart';
 
 class OrderResultScreen extends ConsumerStatefulWidget {
@@ -20,11 +21,13 @@ class OrderResultScreen extends ConsumerStatefulWidget {
 
 class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
   bool _loaded = false;
+  Order? order;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
+      order = ModalRoute.of(context)?.settings.arguments as Order?;
       setState(() {
         _loaded = true;
       });
@@ -103,7 +106,7 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               OrderDetailScreen.routeName,
                               ModalRoute.withName(MainScreen.routeName),
-                              arguments: FakeDB.orders[0]);
+                              arguments: order);
                         },
                         child: const Text('Vai al dettaglio ordine'),
                       ),

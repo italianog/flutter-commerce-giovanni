@@ -46,6 +46,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           width: MediaQuery.of(context).size.width * 0.7,
           child: const Text(
             'Stiamo scaldando le piastre...',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,

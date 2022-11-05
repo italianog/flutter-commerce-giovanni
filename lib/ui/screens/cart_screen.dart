@@ -1,3 +1,4 @@
+import 'package:ecommerce/models/order.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/ui/screens/order_result_screen.dart';
 import 'package:ecommerce/ui/widgets/products/cart_tile.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../models/product.dart';
 import '../theme/app_colors.dart';
@@ -213,8 +215,18 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   onPressed: () {
                     final result = validateOrder();
                     if (result == true) {
-                      Navigator.of(context)
-                          .pushNamed(OrderResultScreen.routeName);
+                      final order = Order(
+                        id: const Uuid().v4(),
+                        totalAmount:
+                            ref.read(cartProvider.notifier).getTotalAmount(),
+                        vat: 21,
+                        products: ref.read(cartProvider),
+                        status: 'pending',
+                        createdAt: DateTime.now(),
+                      );
+                      Navigator.of(context).pushNamed(
+                          OrderResultScreen.routeName,
+                          arguments: order);
                     }
                   },
                   child: Container(
