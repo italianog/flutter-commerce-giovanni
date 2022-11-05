@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/providers/secure_storage_provider.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,12 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  void initApplication() {
+  void initApplication() async {
     ref.read(authProvider.notifier).getCurrentUser();
+    //TODO TEST
+    await ref.read(secureStorageProvider).write(key: 'key', value: 'value');
+    final value = await ref.read(secureStorageProvider).read(key: 'key');
+    print(value);
   }
 
   @override

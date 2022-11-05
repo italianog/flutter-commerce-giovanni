@@ -32,7 +32,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                     ProductListTile(product: favorites[index]),
                 itemCount: favorites.length,
                 separatorBuilder: (context, index) => const SizedBox(
-                  height: 8,
+                  height: 16,
                 ),
               ));
   }

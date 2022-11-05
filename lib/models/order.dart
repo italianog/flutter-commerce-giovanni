@@ -1,7 +1,7 @@
 import 'package:ecommerce/models/product.dart';
 
 class Order {
-  int id;
+  String id;
   double totalAmount;
   double vat;
   List<CartProduct> products;

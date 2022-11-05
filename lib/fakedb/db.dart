@@ -1,14 +1,17 @@
 import 'package:ecommerce/models/order.dart';
+import 'package:uuid/uuid.dart';
 import '../models/product.dart';
 import '../models/push_notification.dart';
 
+Uuid uuid = const Uuid();
+
 class FakeDB {
-  static List<Product> products = const [
+  static List<Product> products = [
     Product(
         name: 'Menu Big Mc Classic',
         rating: 5,
         description: 'Gusta il classico Menu Big Mc assieme ai tuoi amici',
-        id: 1,
+        id: uuid.v4(),
         price: 8.99,
         promotionalPrice: 6.49,
         isAvailable: true,
@@ -19,7 +22,7 @@ class FakeDB {
         name: 'Crispy Mc Bacon',
         rating: 4.8,
         description: 'Gusta il famoso Crispy Mc Bacon con la tua famiglia',
-        id: 2,
+        id: uuid.v4(),
         price: 3.99,
         isAvailable: true,
         promotionalPrice: 2.99,
@@ -30,7 +33,7 @@ class FakeDB {
         name: 'Coca Cola',
         rating: 4.3,
         description: 'La più bevuta in tutto il mondo. Gustala fresca',
-        id: 3,
+        id: uuid.v4(),
         price: 1.99,
         isAvailable: true,
         availableQuantity: 100,
@@ -40,7 +43,7 @@ class FakeDB {
         rating: 2.4,
         name: 'Sprite',
         description: 'Frizzante e divertente. Assaporala con i tuoi amici',
-        id: 4,
+        id: uuid.v4(),
         price: 1.99,
         isAvailable: true,
         availableQuantity: 100,
@@ -51,7 +54,7 @@ class FakeDB {
         name: 'Patatine Fritte',
         description:
             'Talmente buone che ti consigliamo di ordinare la porzione XXL',
-        id: 5,
+        id: uuid.v4(),
         price: 2.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -61,7 +64,7 @@ class FakeDB {
         rating: 5,
         name: 'Happy Meal Menu',
         description: 'Perfetto per i tuoi bambini',
-        id: 6,
+        id: uuid.v4(),
         price: 6.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -71,7 +74,7 @@ class FakeDB {
         rating: 3.49,
         name: 'Bagel con Bacon',
         description: 'Perfetto per uno spuntino',
-        id: 7,
+        id: uuid.v4(),
         price: 2.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -81,7 +84,7 @@ class FakeDB {
         rating: 3.49,
         name: 'Toast con Prosciutto',
         description: 'Perfetto per uno spuntino',
-        id: 8,
+        id: uuid.v4(),
         price: 2.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -91,8 +94,9 @@ class FakeDB {
         rating: 3.49,
         name: 'Mc chicken Panino',
         description: 'Perfetto per uno spuntino al pollo',
-        id: 9,
+        id: uuid.v4(),
         price: 3.49,
+        promotionalPrice: 2.99,
         isAvailable: true,
         availableQuantity: 100,
         category: 'panini',
@@ -101,7 +105,7 @@ class FakeDB {
         rating: 4.99,
         name: 'Nuggets',
         description: 'Perfetto per uno spuntino al pollo',
-        id: 10,
+        id: uuid.v4(),
         price: 2.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -111,7 +115,7 @@ class FakeDB {
         rating: 5.00,
         name: 'Bucket Pollo croccante',
         description: 'Perfetto per uno spuntino al pollo',
-        id: 10986,
+        id: uuid.v4(),
         price: 4.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -121,8 +125,9 @@ class FakeDB {
         rating: 5.00,
         name: 'Rollerbox',
         description: 'Perfetto per uno spuntino.',
-        id: 10986,
+        id: uuid.v4(),
         price: 6.49,
+        promotionalPrice: 4.99,
         isAvailable: true,
         availableQuantity: 100,
         category: 'panini',
@@ -131,7 +136,7 @@ class FakeDB {
         rating: 5.00,
         name: 'Black Burger',
         description: 'Perfetto per uno spuntino particolare.',
-        id: 10986,
+        id: uuid.v4(),
         price: 9.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -141,7 +146,7 @@ class FakeDB {
         rating: 5.00,
         name: 'Fanta Zero',
         description: 'Frizzante, rinfrescante e senza succheri.',
-        id: 10986,
+        id: uuid.v4(),
         price: 2.49,
         isAvailable: true,
         availableQuantity: 100,
@@ -169,16 +174,16 @@ class FakeDB {
 
   static List<Order> orders = [
     Order(
-      id: 1,
+      id: uuid.v4(),
       totalAmount: 50,
       vat: 10,
       products: [
-        const CartProduct(
+        CartProduct(
             product: Product(
                 rating: 4.99,
                 name: 'Nuggets',
                 description: 'Perfetto per uno spuntino al pollo',
-                id: 10,
+                id: uuid.v4(),
                 price: 2.49,
                 isAvailable: true,
                 availableQuantity: 100,

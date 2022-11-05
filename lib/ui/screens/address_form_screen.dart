@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -109,6 +111,23 @@ class _AddressFormScreenState extends ConsumerState<AddressFormScreen> {
                 PrimaryButton(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
+                      if (edit) {
+                        FirebaseFirestore.instance
+                            .collection('addresses')
+                            .doc(_address?.id)
+                            .update({
+                          'postalCode': _controllers['cap']?.text,
+                          'address': _controllers['address']?.text,
+                          'city': _controllers['city']?.text
+                        });
+                      } else {
+                        FirebaseFirestore.instance.collection('addresses').add({
+                          'user_id': ref.read(authProvider)?.uid,
+                          'postalCode': _controllers['cap']?.text,
+                          'address': _controllers['address']?.text,
+                          'city': _controllers['city']?.text
+                        });
+                      }
                       Navigator.of(context).pop();
                     }
                   },

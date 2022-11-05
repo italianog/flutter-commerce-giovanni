@@ -23,7 +23,7 @@ class _CartTileState extends ConsumerState<CartTile> {
   @override
   void initState() {
     super.initState();
-    _actualqty = widget.product.quantity!;
+    _actualqty = widget.product.quantity;
     setState(() {});
   }
 
@@ -151,8 +151,9 @@ class _CartTileState extends ConsumerState<CartTile> {
                     ),
                     IconButton(
                         onPressed: () {
-                          ref.read(cartProvider.notifier).removeProductFromCart(
-                              widget.product.product.id!);
+                          ref
+                              .read(cartProvider.notifier)
+                              .removeProductFromCart(widget.product.product.id);
                           widget.onDeleteProduct();
                         },
                         icon: const Icon(Icons.delete_outline,

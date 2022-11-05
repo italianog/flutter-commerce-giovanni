@@ -1,7 +1,3 @@
-// The StateNotifier class that will be passed to our StateNotifierProvider.
-// This class should not expose state outside of its "state" property, which means
-// no public getters/properties!
-// The public methods on this class will be what allow the UI to modify the state.
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,7 +45,7 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     }
   }
 
-  void removeProductFromCart(int productId) {
+  void removeProductFromCart(String productId) {
     state = [
       for (final product in state)
         if (product.product.id != productId) product,

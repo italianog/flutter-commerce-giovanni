@@ -65,7 +65,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               )
             else
               ProfileItem(
-                icon: FontAwesomeIcons.message,
+                icon: Icons.messenger_outline,
                 label: 'Notifiche',
                 onTap: () {
                   Navigator.of(context)
@@ -82,7 +82,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
             if (user != null)
               ProfileItem(
-                icon: FontAwesomeIcons.dollarSign,
+                icon: Icons.credit_card,
                 label: 'Gestione ordini',
                 onTap: () {
                   Navigator.of(context).pushNamed(OrdersScreen.routeName);
@@ -97,7 +97,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 },
               ),
             ProfileItem(
-              icon: FontAwesomeIcons.shield,
+              icon: Icons.shield_moon,
               label: 'Termini e condizioni',
               onTap: () {
                 Navigator.of(context)
@@ -113,7 +113,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
             if (user != null)
               ProfileItem(
-                icon: FontAwesomeIcons.arrowRightFromBracket,
+                icon: Icons.logout,
                 label: 'Logout',
                 onTap: () {
                   ref.read(authProvider.notifier).logout();
@@ -148,7 +148,7 @@ class ProfileItem extends StatelessWidget {
       onPressed: onTap,
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        margin: const EdgeInsets.only(bottom: 8),
+        margin: const EdgeInsets.only(bottom: 12),
         color: Colors.white,
         child: Row(
           children: [

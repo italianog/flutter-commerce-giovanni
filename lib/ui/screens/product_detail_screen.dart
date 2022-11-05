@@ -150,17 +150,18 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  RatingBarIndicator(
-                    rating: _product!.rating,
-                    itemBuilder: (context, index) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
+                  if (_product != null && _product?.rating != null)
+                    RatingBarIndicator(
+                      rating: _product!.rating,
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      itemCount: 5,
+                      itemSize: 30.0,
+                      unratedColor: Colors.amber.withAlpha(50),
+                      direction: Axis.horizontal,
                     ),
-                    itemCount: 5,
-                    itemSize: 30.0,
-                    unratedColor: Colors.amber.withAlpha(50),
-                    direction: Axis.horizontal,
-                  ),
                   const SizedBox(
                     width: 8,
                   ),

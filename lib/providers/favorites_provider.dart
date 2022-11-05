@@ -8,7 +8,7 @@ class FavoritesNotifier extends StateNotifier<List<Product>> {
     state = [...state, product];
   }
 
-  void removeProductFromFavorites(int productId) {
+  void removeProductFromFavorites(String productId) {
     state = [
       for (final product in state)
         if (product.id != productId) product,

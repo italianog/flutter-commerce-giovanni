@@ -1,7 +1,7 @@
 import 'package:ecommerce/providers/navigation_provider.dart';
-import 'package:ecommerce/ui/screens/products/tabs/altro_tab.dart';
-import 'package:ecommerce/ui/screens/products/tabs/bibite_tab.dart';
-import 'package:ecommerce/ui/screens/products/tabs/panini_tab.dart';
+import 'package:ecommerce/ui/screens/products/tabs/other_tab.dart';
+import 'package:ecommerce/ui/screens/products/tabs/drink_tab.dart';
+import 'package:ecommerce/ui/screens/products/tabs/sandwich_tab.dart';
 import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

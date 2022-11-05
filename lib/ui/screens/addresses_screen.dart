@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,9 +17,6 @@ class AddressesScreen extends ConsumerStatefulWidget {
 }
 
 class _AddressesScreenState extends ConsumerState<AddressesScreen> {
-  final List<Address> _addresses = [
-    Address(address: 'Via Prova', postalCode: '98050', city: 'Milazzo'),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +36,64 @@ class _AddressesScreenState extends ConsumerState<AddressesScreen> {
             const SizedBox(
               height: 8,
             ),
-            ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) => ListTile(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                            AddressFormScreen.routeName,
-                            arguments: _addresses[index]);
-                      },
-                      title: Text(_addresses[index].address),
-                      subtitle: Text(_addresses[index].city),
-                      trailing: const Icon(Icons.chevron_right),
-                      tileColor: Colors.white,
-                    ),
-                separatorBuilder: (context, index) => const SizedBox(),
-                itemCount: _addresses.length),
+            StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('addresses')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final Address address = Address.fromMap(
+                            snapshot.data!.docs[index].data(),
+                            snapshot.data!.docs[index].id,
+                          );
+
+                          return ListTile(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  AddressFormScreen.routeName,
+                                  arguments: address);
+                            },
+                            title: Text(address.address),
+                            subtitle: Text(address.city),
+                            trailing: const Icon(Icons.chevron_right),
+                            tileColor: Colors.white,
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 8,
+                            ),
+                        itemCount: snapshot.data!.docs.length);
+                  } else if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 32),
+                      child: const Center(
+                        child: Text(
+                          'Non sono ancora stati inseriti indirizzi',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 32),
+                      child: const Center(
+                        child: Text(
+                          'Si è verificato un errore',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      ),
+                    );
+                  }
+                }),
           ],
         ),
       ),

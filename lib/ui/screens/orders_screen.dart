@@ -1,8 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/models/order.dart';
-import 'package:ecommerce/models/product.dart';
-import 'package:ecommerce/ui/screens/order_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

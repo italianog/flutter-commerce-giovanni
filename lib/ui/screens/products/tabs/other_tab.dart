@@ -1,4 +1,4 @@
-import 'package:ecommerce/ui/screens/products/tabs/panini_tab.dart';
+import 'package:ecommerce/ui/screens/products/tabs/sandwich_tab.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../fakedb/db.dart';
