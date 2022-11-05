@@ -1,3 +1,4 @@
+import 'package:ecommerce/ui/screens/products/products_on_sale.dart';
 import 'package:ecommerce/ui/theme/app_colors.dart';
 import 'package:ecommerce/ui/widgets/products/preview_offers_list.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             RowTitle(
               title: 'Prodotti in offerta',
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(ProductsOnSale.routeName);
+              },
             ),
             const SizedBox(
               height: 8,

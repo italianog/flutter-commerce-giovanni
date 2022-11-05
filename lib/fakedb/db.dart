@@ -10,6 +10,7 @@ class FakeDB {
         description: 'Gusta il classico Menu Big Mc assieme ai tuoi amici',
         id: 1,
         price: 8.99,
+        promotionalPrice: 6.49,
         isAvailable: true,
         availableQuantity: 100,
         category: 'panini',
@@ -21,6 +22,7 @@ class FakeDB {
         id: 2,
         price: 3.99,
         isAvailable: true,
+        promotionalPrice: 2.99,
         availableQuantity: 100,
         category: 'panini',
         image: 'assets/images/crispy.png'),
@@ -127,30 +129,8 @@ class FakeDB {
         image: 'assets/images/roller_box.png'),
   ];
 
-  static List<Product> onSaleProducts = const [
-    Product(
-        rating: 3.49,
-        name: 'Toast con Prosciutto',
-        description: 'Perfetto per uno spuntino',
-        id: 234,
-        price: 2.49,
-        promotionalPrice: 1.99,
-        isAvailable: true,
-        availableQuantity: 100,
-        category: 'panini',
-        image: 'assets/images/toast.png'),
-    Product(
-        rating: 3.49,
-        name: 'Mc chicken Panino',
-        description: 'Perfetto per uno spuntino al pollo',
-        id: 45678,
-        price: 3.49,
-        promotionalPrice: 0.99,
-        isAvailable: true,
-        availableQuantity: 100,
-        category: 'panini',
-        image: 'assets/images/mcchicken.png'),
-  ];
+  static List<Product> onSaleProducts =
+      products.where((element) => element.promotionalPrice != null).toList();
 
   static List<PushNotification> notifications = const [
     PushNotification(

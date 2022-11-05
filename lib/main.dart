@@ -16,6 +16,7 @@ import 'package:ecommerce/ui/screens/otp_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:ecommerce/ui/screens/products/products_main.dart';
+import 'package:ecommerce/ui/screens/products/products_on_sale.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
@@ -153,6 +154,7 @@ class MyApp extends ConsumerWidget {
         SplashScreen.routeName: (context) => const SplashScreen(),
         FavoritesScreen.routeName: (context) => const FavoritesScreen(),
         ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
+        ProductsOnSale.routeName: (context) => const ProductsOnSale(),
         SignInScreen.routeName: (context) => const SignInScreen(),
         SignUpScreen.routeName: (context) => const SignUpScreen(),
         NotificationsScreen.routeName: (context) => const NotificationsScreen(),

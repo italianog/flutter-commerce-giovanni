@@ -65,15 +65,26 @@ class _ItemGridTileState extends ConsumerState<ItemGridTile> {
                             const SizedBox(
                               height: 2,
                             ),
-                            Text(
-                              NumberFormat.currency(
-                                      locale: 'it',
-                                      symbol: '€',
-                                      decimalDigits: 2)
-                                  .format(widget.product.price),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            )
+                            if (widget.product.promotionalPrice != null)
+                              Text(
+                                NumberFormat.currency(
+                                        locale: 'it',
+                                        symbol: '€',
+                                        decimalDigits: 2)
+                                    .format(widget.product.promotionalPrice),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              )
+                            else
+                              Text(
+                                NumberFormat.currency(
+                                        locale: 'it',
+                                        symbol: '€',
+                                        decimalDigits: 2)
+                                    .format(widget.product.price),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              )
                           ],
                         ),
                       ),

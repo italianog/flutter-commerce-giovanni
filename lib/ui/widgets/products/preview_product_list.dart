@@ -90,12 +90,20 @@ class ProductPreview extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  NumberFormat.currency(
-                          locale: 'it', symbol: '€', decimalDigits: 2)
-                      .format(product.price),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                if (product.promotionalPrice == null)
+                  Text(
+                    NumberFormat.currency(
+                            locale: 'it', symbol: '€', decimalDigits: 2)
+                        .format(product.price),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
+                else
+                  Text(
+                    NumberFormat.currency(
+                            locale: 'it', symbol: '€', decimalDigits: 2)
+                        .format(product.promotionalPrice),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.favorite_border),

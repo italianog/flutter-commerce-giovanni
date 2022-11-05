@@ -91,7 +91,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             const SizedBox(
               height: 16,
             ),
-            if (_product?.category == 'altro' || _product?.category == 'bibite')
+            if (_product?.category == 'bibite')
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Wrap(
