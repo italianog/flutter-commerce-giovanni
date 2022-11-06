@@ -5,6 +5,7 @@ import 'package:ecommerce/ui/screens/favorites_screen.dart';
 import 'package:ecommerce/ui/screens/notifications_screen.dart';
 import 'package:ecommerce/ui/screens/orders_screen.dart';
 import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
+import 'package:ecommerce/ui/screens/settings_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -112,6 +113,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Navigator.of(context).pushNamed(PrivacyPolicyScreen.routeName);
               },
             ),
+            ProfileItem(
+                icon: Icons.settings,
+                label: 'Impostazioni',
+                onTap: () {
+                  Navigator.of(context).pushNamed(SettingsScreen.routeName);
+                }),
             if (user != null)
               ProfileItem(
                 icon: Icons.logout,

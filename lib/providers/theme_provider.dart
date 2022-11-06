@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier()
-      : super(AppThemes.lightTheme.copyWith(
-            /*        inputDecorationTheme: InputDecorationTheme(
+  ThemeNotifier() : super(AppThemes.lightTheme);
+
+  /*      AppThemes.lightTheme.copyWith(
+                    inputDecorationTheme: InputDecorationTheme(
               iconColor: AppColors.primaryColor,
               border: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.primaryColor)),
@@ -16,19 +17,21 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
               ),
               disabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.primaryColor)),
-            ),*/
+            ),
             radioTheme: RadioThemeData(
-                fillColor: MaterialStateProperty.all(AppColors.primaryColor))));
+              fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+            ),
+          ),*/
 
   void selectTheme(ThemeData themeData) {
     state = themeData;
   }
 
-  void selectDarkTheme(ThemeData darkTheme) {
+  void selectDarkTheme() {
     state = AppThemes.darkTheme;
   }
 
-  void selectLightTheme(ThemeData lightTheme) {
+  void selectLightTheme() {
     state = AppThemes.lightTheme;
   }
 }

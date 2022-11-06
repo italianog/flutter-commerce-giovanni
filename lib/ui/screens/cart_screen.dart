@@ -237,7 +237,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         const SizedBox(
                           width: 16,
                         ),
-                        const Text('Conferma'),
+                        const Text(
+                          'Conferma',
+                        ),
                         const Spacer(),
                         Text(
                           NumberFormat.currency(

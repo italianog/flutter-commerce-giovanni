@@ -17,11 +17,13 @@ import 'package:ecommerce/ui/screens/privacy_policy_screen.dart';
 import 'package:ecommerce/ui/screens/product_detail_screen.dart';
 import 'package:ecommerce/ui/screens/products/products_main.dart';
 import 'package:ecommerce/ui/screens/products/products_on_sale.dart';
+import 'package:ecommerce/ui/screens/settings_screen.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:ecommerce/ui/screens/splash_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
+import 'package:ecommerce/ui/screens/test_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -146,8 +148,9 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
-      theme: ref.read(themeProvider),
+      theme: ref.watch(themeProvider),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
+      //initialRoute: SplashScreen.routeName,
       initialRoute: SplashScreen.routeName,
       themeMode: ThemeMode.light,
       routes: {
@@ -176,6 +179,8 @@ class MyApp extends ConsumerWidget {
         EditProfile.routeName: (context) => const EditProfile(),
         ProductsMain.routeName: (context) => const ProductsMain(),
         ChangePassword.routeName: (context) => const ChangePassword(),
+        SettingsScreen.routeName: (context) => const SettingsScreen(),
+        TestScreen.routeName: (context) => const TestScreen(),
       },
     );
   }

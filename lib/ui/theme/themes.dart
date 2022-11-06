@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
@@ -9,21 +6,28 @@ class AppThemes {
     appBarTheme: const AppBarTheme(
       elevation: 0,
       color: Colors.white,
-      iconTheme: const IconThemeData(color: Colors.black54),
+      iconTheme: IconThemeData(color: Colors.black54),
       centerTitle: true,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
         color: Colors.black,
       ),
     ),
   );
 
   static ThemeData darkTheme = ThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ),
     appBarTheme: const AppBarTheme(
+      iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.black87,
       titleTextStyle: TextStyle(color: Colors.white),
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.black87,
