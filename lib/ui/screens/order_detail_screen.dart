@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/order.dart';
+import '../utils/utils.dart';
 
 class OrderDetailScreen extends ConsumerStatefulWidget {
   const OrderDetailScreen({
@@ -20,7 +21,6 @@ class OrderDetailScreen extends ConsumerStatefulWidget {
 
 class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
   Order? _order;
-  DateFormat dateFormat = DateFormat("yyyy/MM/dd HH:mm");
 
   @override
   void initState() {

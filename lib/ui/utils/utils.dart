@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 Future<void> initPlatformState() async {
   var deviceData = <String, dynamic>{};
@@ -164,6 +165,4 @@ Map<String, dynamic> readWindowsDeviceInfo(WindowsDeviceInfo data) {
   };
 }
 
-String fromDatetimeToString(DateTime dateTime) {
-  return '';
-}
+DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");

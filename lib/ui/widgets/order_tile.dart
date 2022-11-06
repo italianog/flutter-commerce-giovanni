@@ -1,4 +1,5 @@
 import 'package:ecommerce/ui/screens/order_detail_screen.dart';
+import 'package:ecommerce/ui/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,7 +34,7 @@ class OrderTile extends StatelessWidget {
         },
         tileColor: Colors.white,
         leading: Image.asset(order.products[0].product.image),
-        title: Text(DateFormat.yMMMMd().format(order.createdAt)),
+        title: Text(dateFormat.format(order.createdAt)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
