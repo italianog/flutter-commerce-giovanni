@@ -16,7 +16,7 @@
         </intent>
     </queries>
    <application
-        android:label="ecommerce"
+        android:label="Flutter Commerce"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

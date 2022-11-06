@@ -33,35 +33,38 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Profilo'),
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(NotificationsScreen.routeName);
-                },
-                icon: const Icon(Icons.notifications_none_outlined),
-              ),
-              Positioned(
-                right: 3,
-                top: 4,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.black54),
-                  child: Text(
-                    ref
-                        .watch(notificationsProvider)
-                        .where((element) => element.read == false)
-                        .toList()
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 12),
-                  ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(NotificationsScreen.routeName);
+            },
+            child: Stack(
+              children: [
+                const IconButton(
+                  icon: Icon(Icons.notifications_none_outlined),
+                  padding: EdgeInsets.zero,
+                  onPressed: null,
                 ),
-              )
-            ],
+                Positioned(
+                  right: 3,
+                  top: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.black54),
+                    child: Text(
+                      ref
+                          .watch(notificationsProvider)
+                          .where((element) => element.read == false)
+                          .toList()
+                          .length
+                          .toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 12),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           const SizedBox(
             width: 16,

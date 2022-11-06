@@ -93,14 +93,9 @@ class CouponBox extends StatelessWidget {
             minChildSize: 0.2,
             maxChildSize: 0.8,
             expand: false,
-            builder: (context, scrollController) => SafeArea(
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount: 4,
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(index.toString()),
-                  onTap: () => Navigator.of(context).pop(index),
-                ),
+            builder: (context, scrollController) => const SafeArea(
+              child: SizedBox(
+                height: 50,
               ),
             ),
           ),
