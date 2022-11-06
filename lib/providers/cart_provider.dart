@@ -70,6 +70,7 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
     return count;
   }
 
+  //TODO fix bug index in cart
   void decreaseQuantity(CartProduct cartProduct) {
     int foundIndex = findProductInCart(cartProduct.product);
     CartProduct p = state[foundIndex];
