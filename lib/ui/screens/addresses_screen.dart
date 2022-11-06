@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/address.dart';
+import '../../providers/auth_provider.dart';
 import 'address_form_screen.dart';
 
 class AddressesScreen extends ConsumerStatefulWidget {
@@ -39,6 +40,8 @@ class _AddressesScreenState extends ConsumerState<AddressesScreen> {
             StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('addresses')
+                    .where('user_id',
+                        isEqualTo: '${ref.read(authProvider)?.uid}')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {

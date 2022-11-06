@@ -96,7 +96,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 icon: FontAwesomeIcons.arrowRightFromBracket,
                 label: 'Accedi',
                 onTap: () {
-                  // ref.read(authProvider.notifier).login();
                   Navigator.of(context).pushNamed(SignInScreen.routeName);
                 },
               )
@@ -191,6 +190,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                                 AppColors.primaryColor)),
                                     onPressed: () {
                                       ref.read(authProvider.notifier).logout();
+                                      Navigator.of(context).pop();
                                     },
                                     child: const Text('Logout'),
                                   ),

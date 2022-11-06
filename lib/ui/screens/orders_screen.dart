@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/models/order.dart';
+import 'package:ecommerce/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -33,10 +34,13 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
               height: 16,
             ),
             StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection('orders').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('orders')
+                    .where('user_id',
+                        isEqualTo: '${ref.read(authProvider)?.uid}')
+                    .snapshots(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                     return ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -47,6 +51,10 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                         },
                         separatorBuilder: (context, index) => const SizedBox(),
                         itemCount: snapshot.data!.docs.length);
+                  } else if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text('Non hai ancora effettuato ordini'),
+                    );
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
