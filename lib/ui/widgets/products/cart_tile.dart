@@ -23,11 +23,9 @@ class _CartTileState extends ConsumerState<CartTile> {
   @override
   void initState() {
     super.initState();
-    _actualqty = widget.product.quantity;
     setState(() {});
   }
 
-  late int _actualqty;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,13 +116,10 @@ class _CartTileState extends ConsumerState<CartTile> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              if (_actualqty > 1) {
+                              if (widget.product.quantity > 1) {
                                 ref
                                     .read(cartProvider.notifier)
                                     .decreaseQuantity(widget.product);
-                                setState(() {
-                                  _actualqty--;
-                                });
                               }
                             },
                             icon: const Icon(
@@ -132,17 +127,14 @@ class _CartTileState extends ConsumerState<CartTile> {
                               color: Colors.black54,
                             )),
                         Text(
-                          _actualqty.toString(),
+                          widget.product.quantity.toString(),
                           style: const TextStyle(fontSize: 18),
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              _actualqty++;
-                              ref
-                                  .read(cartProvider.notifier)
-                                  .increaseQuantity(widget.product);
-                            });
+                            ref
+                                .read(cartProvider.notifier)
+                                .increaseQuantity(widget.product);
                           },
                           icon: const Icon(Icons.add_circle_outline,
                               color: Colors.black54),
