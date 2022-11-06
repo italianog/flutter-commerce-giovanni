@@ -116,7 +116,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                             NumberFormat.currency(
                                     locale: 'it', symbol: '€', decimalDigits: 2)
                                 .format(
-                              FakeDB().getTotalFromOrder(_order!),
+                              _order!.totalAmount,
                             ),
                             style: const TextStyle(fontSize: 20),
                           )
