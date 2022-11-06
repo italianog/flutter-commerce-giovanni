@@ -38,6 +38,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           final Order order =

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ecommerce/providers/theme_provider.dart';
 import 'package:ecommerce/ui/screens/address_form_screen.dart';
 import 'package:ecommerce/ui/screens/addresses_screen.dart';
@@ -24,120 +26,64 @@ import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:ecommerce/ui/screens/splash_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:ecommerce/ui/screens/test_screen.dart';
+import 'package:ecommerce/ui/theme/app_colors.dart';
+import 'package:ecommerce/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'firebase_messaging_utils.dart';
 import 'firebase_options.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  ///Background Handler
+
+  print("Handling a background message: ${message.messageId}");
+  print(message.notification?.title);
+  print(message.notification?.body);
+}
+
+void initFirebaseMessaging() {
+  requestNotificationsPermission();
+
+  ///Foreground Handler
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  });
+}
+
 Future<void> main() async {
+  if (Platform.isAndroid) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: AppColors.backgroundGrey),
+    );
+  }
   WidgetsFlutterBinding.ensureInitialized();
   configLoading();
-  //requestNotificationsPermission();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-/*
-  await FirebaseMessaging.instance.getInitialMessage();
-  getFirebaseToken();
-  initPlatformState();
-  initNotifications();
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      importance: Importance.max,
-    );
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    // If `onMessage` is triggered with a notification, construct our own
-    // local notification to show to users using the created channel.
-    if (notification != null && android != null) {}
-  });
-*/
+  initFirebaseMessaging();
 
   runApp(
     const ProviderScope(
       child: MyApp(),
     ),
   );
-}
-
-void initNotifications() {
-  const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-  const initializationSettings = InitializationSettings(
-    android: androidSettings,
-    iOS: DarwinInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification),
-  );
-  FlutterLocalNotificationsPlugin().initialize(initializationSettings,
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
-}
-
-Future<void> requestNotificationsPermission() async {
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  NotificationSettings notificationSetting =
-      await firebaseMessaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    sound: true,
-  );
-
-  switch (notificationSetting.authorizationStatus) {
-    case (AuthorizationStatus.authorized):
-      print('granted');
-      break;
-    default:
-      print('not granted');
-      break;
-  }
-}
-
-Future<void> getFirebaseToken() async {
-  FirebaseMessaging.instance.getToken().then((value) {
-    print(value);
-  });
-}
-
-void onDidReceiveLocalNotification(
-    int id, String? title, String? body, String? payload) {
-  print(title);
-  print(body);
-}
-
-void onDidReceiveNotificationResponse(NotificationResponse details) {}
-
-void configLoading() {
-  EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    ..loadingStyle = EasyLoadingStyle.dark
-    ..indicatorSize = 45.0
-    ..radius = 10.0
-    ..progressColor = Colors.yellow
-    ..backgroundColor = Colors.green
-    ..indicatorColor = Colors.yellow
-    ..textColor = Colors.yellow
-    ..maskColor = Colors.blue.withOpacity(0.5)
-    ..userInteractions = true
-    ..dismissOnTap = false;
 }
 
 class MyApp extends ConsumerWidget {
@@ -150,7 +96,6 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ref.watch(themeProvider),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
-      //initialRoute: SplashScreen.routeName,
       initialRoute: SplashScreen.routeName,
       themeMode: ThemeMode.light,
       routes: {

@@ -33,7 +33,9 @@ class OrderTile extends StatelessWidget {
               .pushNamed(OrderDetailScreen.routeName, arguments: order);
         },
         tileColor: Colors.white,
-        leading: Image.asset(order.products[0].product.image),
+        leading: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 80, minWidth: 80),
+            child: Image.asset(order.products[0].product.image)),
         title: Text(dateFormat.format(order.createdAt)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
