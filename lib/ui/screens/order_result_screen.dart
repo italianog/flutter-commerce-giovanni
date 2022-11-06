@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
@@ -30,6 +31,9 @@ class _OrderResultScreenState extends ConsumerState<OrderResultScreen> {
       order = ModalRoute.of(context)?.settings.arguments as Order?;
       setState(() {
         _loaded = true;
+        FirebaseFirestore.instance.collection('/orders').add(
+              order!.toMap(),
+            );
       });
     });
   }

@@ -19,7 +19,7 @@ class OrderDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
-  late Order _order;
+  Order? _order;
   DateFormat dateFormat = DateFormat("yyyy/MM/dd HH:mm");
 
   @override
@@ -33,97 +33,110 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ordine'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  'Ordine del ${dateFormat.format(_order.createdAt)}',
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          boxShadow: [
-                            AppShadows.defaultShadow,
-                          ],
-                        ),
-                        child: ListTile(
-                          trailing:
-                              Text('x ${_order.products[index].quantity}'),
-                          contentPadding: const EdgeInsets.all(16),
-                          tileColor: Colors.white,
-                          leading: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Image.asset(
-                              _order.products[index].product.image,
+    return _order != null
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text('Ordine'),
+            ),
+            body: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Text(
+                        'Ordine del ${dateFormat.format(_order!.createdAt)}',
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  AppShadows.defaultShadow,
+                                ],
+                              ),
+                              child: ListTile(
+                                trailing: Text(
+                                    'x ${_order!.products[index].quantity}'),
+                                contentPadding: const EdgeInsets.all(16),
+                                tileColor: Colors.white,
+                                leading: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.asset(
+                                    _order!.products[index].product.image,
+                                  ),
+                                ),
+                                title:
+                                    Text(_order!.products[index].product.name),
+                                subtitle: Text(
+                                  NumberFormat.currency(
+                                          locale: 'it',
+                                          symbol: '€',
+                                          decimalDigits: 2)
+                                      .format(_order!
+                                          .products[index].product.price),
+                                ),
+                              ),
                             ),
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 16,
+                            ),
+                        itemCount: _order!.products.length),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Totale',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
                           ),
-                          title: Text(_order.products[index].product.name),
-                          subtitle: Text(
+                          const Spacer(),
+                          Text(
                             NumberFormat.currency(
                                     locale: 'it', symbol: '€', decimalDigits: 2)
-                                .format(_order.products[index].product.price),
-                          ),
-                        ),
+                                .format(
+                              FakeDB().getTotalFromOrder(_order!),
+                            ),
+                            style: const TextStyle(fontSize: 20),
+                          )
+                        ],
                       ),
-                  separatorBuilder: (context, index) => const SizedBox(
-                        height: 16,
-                      ),
-                  itemCount: _order.products.length),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  children: [
-                    const Text(
-                      'Totale',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
-                    const Spacer(),
-                    Text(
-                      NumberFormat.currency(
-                              locale: 'it', symbol: '€', decimalDigits: 2)
-                          .format(
-                        FakeDB().getTotalFromOrder(_order),
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    )
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    PrimaryButton(onTap: () {}, text: 'Contattaci')
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 32,
+            ),
+          )
+        : Container(
+            color: Colors.white,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
               ),
-              PrimaryButton(onTap: () {}, text: 'Contattaci')
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

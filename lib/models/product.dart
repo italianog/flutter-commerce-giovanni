@@ -34,18 +34,50 @@ class Product {
         rating: map['rating'] ?? 5.0,
         description: map['description']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      'price': price,
+      'isAvailable': isAvailable,
+      'image': image,
+      'availableQuantity': availableQuantity,
+      'rating': rating,
+      'description': description,
+    };
+  }
 }
 
 class CartProduct {
   final Product product;
   final int quantity;
-  final String? size;
-  final String? color;
 
   const CartProduct({
     required this.product,
     required this.quantity,
-    this.size,
-    this.color,
   });
+
+  factory CartProduct.fromMap(Map<String, dynamic> map) {
+    return CartProduct(
+      product: Product(
+        name: map['product']['name'],
+        id: map['product']['id'],
+        price: map['product']['price'] * 1.00,
+        isAvailable: map['product']['isAvailable'] ?? true,
+        image: map['product']['image'],
+        availableQuantity: 10,
+        rating: map['product']['rating'] ?? 5.0,
+        description: map['product']['description'],
+      ),
+      quantity: map['quantity'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'product': product.toMap(),
+      'quantity': quantity,
+    };
+  }
 }

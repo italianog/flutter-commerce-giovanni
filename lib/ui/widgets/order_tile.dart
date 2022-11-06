@@ -16,7 +16,7 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -33,7 +33,9 @@ class OrderTile extends StatelessWidget {
         tileColor: Colors.white,
         leading: Image.asset(order.products[0].product.image),
         title: Text(DateFormat.yMMMMd().format(order.createdAt)),
-        subtitle: Text(order.products[0].product.name),
+        subtitle: Text(order.products.length == 1
+            ? order.products[0].product.name
+            : '${order.products[0].product.name} e altri ${order.products.length - 1} prodotti'),
         trailing: const Icon(Icons.chevron_right),
       ),
     );

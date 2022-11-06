@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/models/order.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class OrdersScreen extends ConsumerStatefulWidget {
 
 class _OrdersScreenState extends ConsumerState<OrdersScreen> {
   DateFormat dateFormat = DateFormat("yyyy/MM/dd HH:mm");
-  final List<Order> _orders = FakeDB.orders;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +33,26 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
             const SizedBox(
               height: 16,
             ),
-            ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) =>
-                    OrderTile(order: _orders[index]),
-                separatorBuilder: (context, index) => const SizedBox(),
-                itemCount: _orders.length),
+            StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection('orders').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final Order order =
+                              Order.fromMap(snapshot.data!.docs[index].data());
+                          return OrderTile(order: order);
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(),
+                        itemCount: snapshot.data!.docs.length);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ],
         ),
       ),
