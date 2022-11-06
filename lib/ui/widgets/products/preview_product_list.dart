@@ -80,12 +80,17 @@ class ProductPreview extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Text(
-              product.name.capitalize(),
-              textAlign: TextAlign.start,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 16),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                product.name.capitalize(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,10 +109,10 @@ class ProductPreview extends StatelessWidget {
                         .format(product.promotionalPrice),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                IconButton(
+                /*  IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.favorite_border),
-                )
+                )*/
               ],
             )
           ],

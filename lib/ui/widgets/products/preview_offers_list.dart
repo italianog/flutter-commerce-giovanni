@@ -100,6 +100,9 @@ class ProductPreview extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 16),
                 ),
+                const SizedBox(
+                  height: 4,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -117,10 +120,10 @@ class ProductPreview extends StatelessWidget {
                           .format((product.promotionalPrice)),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    IconButton(
+                    /*    IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.favorite_border),
-                    )
+                    )*/
                   ],
                 )
               ],

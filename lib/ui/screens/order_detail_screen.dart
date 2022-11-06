@@ -124,7 +124,56 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                     const SizedBox(
                       height: 32,
                     ),
-                    PrimaryButton(onTap: () {}, text: 'Contattaci')
+                    PrimaryButton(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            isDismissible: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(15)),
+                            ),
+                            builder: (context) => DraggableScrollableSheet(
+                              initialChildSize: 0.3,
+                              minChildSize: 0.2,
+                              maxChildSize: 0.8,
+                              expand: false,
+                              builder: (context, scrollController) => SafeArea(
+                                child: ListView(
+                                  controller: scrollController,
+                                  children: [
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                          Icons.phone_android_outlined),
+                                      title:
+                                          const Text('Chiama al nostro numero'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        //TODO url_launcher
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.mail),
+                                      title: const Text(
+                                          'Scrivi una mail al nostro team'),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        text: 'Contattaci')
                   ],
                 ),
               ),

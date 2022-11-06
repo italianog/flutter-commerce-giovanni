@@ -25,6 +25,7 @@ class OrderTile extends StatelessWidget {
         ],
       ),
       child: ListTile(
+        isThreeLine: true,
         contentPadding: const EdgeInsets.all(16),
         onTap: () {
           Navigator.of(context)
@@ -33,9 +34,25 @@ class OrderTile extends StatelessWidget {
         tileColor: Colors.white,
         leading: Image.asset(order.products[0].product.image),
         title: Text(DateFormat.yMMMMd().format(order.createdAt)),
-        subtitle: Text(order.products.length == 1
-            ? order.products[0].product.name
-            : '${order.products[0].product.name} e altri ${order.products.length - 1} prodotti'),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              order.products.length == 1
+                  ? order.products[0].product.name
+                  : '${order.products[0].product.name} e altri ${order.products.length - 1} prodotti',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              'Totale ordine: ${NumberFormat.currency(locale: 'it', symbol: '€', decimalDigits: 2).format(order.totalAmount)}',
+              style: const TextStyle(fontWeight: FontWeight.w500),
+            )
+          ],
+        ),
         trailing: const Icon(Icons.chevron_right),
       ),
     );
