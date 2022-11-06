@@ -72,23 +72,14 @@ class CartNotifier extends StateNotifier<List<CartProduct>> {
 
   void decreaseQuantity(CartProduct cartProduct) {
     int foundIndex = findProductInCart(cartProduct.product);
-    if (foundIndex == -1) {
-      state = [
-        ...state,
-        CartProduct(
-            product: cartProduct.product, quantity: (cartProduct.quantity) + 1)
-      ];
-    } else {
-      state = [
-        for (var i = 0; i < state.length; i++)
-          if (i == foundIndex)
-            if (state[i].quantity > 1)
-              CartProduct(
-                  product: state[i].product, quantity: state[i].quantity - 1)
-            else
-              state[i]
-      ];
-    }
+    CartProduct p = state[foundIndex];
+    state = [
+      for (var i = 0; i < state.length; i++)
+        if (i == foundIndex && state[i].quantity > 1)
+          CartProduct(product: p.product, quantity: p.quantity - 1)
+        else
+          state[i]
+    ];
   }
 
   void increaseQuantity(CartProduct cartProduct) {

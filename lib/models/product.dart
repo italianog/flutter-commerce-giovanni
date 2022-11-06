@@ -80,4 +80,14 @@ class CartProduct {
       'quantity': quantity,
     };
   }
+
+  CartProduct copyWith({
+    Product? product,
+    int? quantity,
+  }) {
+    return CartProduct(
+      product: product ?? this.product,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 }
