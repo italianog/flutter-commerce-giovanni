@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../models/product.dart';
-import 'dart:math';
 
 class PreviewOffersList extends ConsumerStatefulWidget {
   const PreviewOffersList({Key? key}) : super(key: key);

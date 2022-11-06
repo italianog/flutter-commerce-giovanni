@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 import '../../models/product.dart';
 import '../widgets/buttons/primary_buttons.dart';
+import '../widgets/products/preview_product_list.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   bool _isFavorite = false;
   String value = '0';
   int randomNumber = 0;
+  List<Product> similarProds = [];
 
   @override
   void initState() {
@@ -36,6 +38,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     randomNumber = random.nextInt(100);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _product = ModalRoute.of(context)!.settings.arguments as Product;
+      similarProds = FakeDB.products
+          .where((element) => element.category == _product?.category)
+          .toList();
       setState(() {});
     });
   }
@@ -289,6 +294,35 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                           ),
                   )
                 ],
+              ),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Ti potrebbe anche piacere... ',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: SizedBox(
+                height: 170,
+                child: ListView.separated(
+                    clipBehavior: Clip.none,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) =>
+                        ProductPreview(product: similarProds[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                          width: 32,
+                        ),
+                    itemCount: similarProds.length),
               ),
             ),
             const SizedBox(
