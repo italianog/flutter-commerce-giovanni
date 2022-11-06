@@ -26,14 +26,6 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        decoration: const BoxDecoration(
-            /*     gradient: LinearGradient(
-            colors: [
-              Color(0xffbdc3c7),
-              Color(0xff2c3e50),
-            ],
-          ),*/
-            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,14 +37,14 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(
               height: 120,
             ),
-            const FacebookLoginButton(),
+            /*       const FacebookLoginButton(),
             const SizedBox(
               height: 20,
             ),
             const AppleLoginButton(),
             const SizedBox(
               height: 20,
-            ),
+            ),*/
             const GoogleLoginButton(),
             const SizedBox(
               height: 20,

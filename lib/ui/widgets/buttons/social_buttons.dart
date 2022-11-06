@@ -1,6 +1,9 @@
+import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:ecommerce/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce/ui/screens/signin_with_email.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FacebookLoginButton extends StatefulWidget {
@@ -72,15 +75,19 @@ class AppleLoginButton extends StatelessWidget {
   }
 }
 
-class GoogleLoginButton extends StatelessWidget {
+class GoogleLoginButton extends ConsumerWidget {
   const GoogleLoginButton({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialButton(
       color: Colors.redAccent,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      onPressed: () {},
+      onPressed: () async {
+        await ref.read(authProvider.notifier).signInWithGoogle();
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
+      },
       child: Row(
         children: const [
           FaIcon(

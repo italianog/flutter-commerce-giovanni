@@ -68,6 +68,7 @@ dependencies:
   rounded_loading_button: ^2.1.0
   uuid: ^3.0.6
   flutter_secure_storage: ^6.0.0
+  google_sign_in: ^5.4.2
 
 
 
