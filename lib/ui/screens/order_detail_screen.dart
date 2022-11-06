@@ -61,6 +61,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                       height: 16,
                     ),
                     ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) => Container(
                               decoration: BoxDecoration(
@@ -90,8 +91,10 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                                           locale: 'it',
                                           symbol: '€',
                                           decimalDigits: 2)
-                                      .format(_order!
-                                          .products[index].product.price),
+                                      .format(_order!.products[index].product
+                                              .promotionalPrice ??
+                                          _order!
+                                              .products[index].product.price),
                                 ),
                               ),
                             ),
@@ -195,7 +198,10 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                             ),
                           );
                         },
-                        text: 'Contattaci')
+                        text: 'Contattaci'),
+                    const SizedBox(
+                      height: 32,
+                    ),
                   ],
                 ),
               ),

@@ -29,6 +29,9 @@ class Product {
         id: map['id'],
         price: map['price'] * 1.00,
         isAvailable: map['isAvailable'] ?? true,
+        promotionalPrice: map['promotionalPrice'] != null
+            ? double.tryParse(map['promotionalPrice'])
+            : null,
         image: map['image'],
         availableQuantity: 10,
         rating: map['rating'] ?? 5.0,
@@ -40,6 +43,7 @@ class Product {
       'name': name,
       'id': id,
       'price': price,
+      'promotionalPrice': promotionalPrice,
       'isAvailable': isAvailable,
       'image': image,
       'availableQuantity': availableQuantity,
@@ -66,6 +70,7 @@ class CartProduct {
         price: map['product']['price'] * 1.00,
         isAvailable: map['product']['isAvailable'] ?? true,
         image: map['product']['image'],
+        promotionalPrice: map['product']['promotionalPrice'],
         availableQuantity: 10,
         rating: map['product']['rating'] ?? 5.0,
         description: map['product']['description'],
