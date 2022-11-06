@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ecommerce/fakedb/db.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/providers/favorites_provider.dart';
 import 'package:ecommerce/providers/navigation_provider.dart';
 import 'package:ecommerce/ui/screens/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -239,6 +240,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
+                            ref
+                                .read(favoritesProvider.notifier)
+                                .addToFavorites(_product!);
                           } else {
                             var snackBar = SnackBar(
                               backgroundColor: Colors.purple,
@@ -247,8 +251,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
+                            ref
+                                .read(favoritesProvider.notifier)
+                                .removeProductFromFavorites(_product!.id);
                           }
-                          //TODO CALL API
                         });
                       },
                     ),

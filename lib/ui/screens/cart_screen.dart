@@ -109,9 +109,17 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 ),
                 if (products.isEmpty)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: const Center(
-                      child: Text('Il tuo carrello è attualmente vuoto'),
+                    margin: const EdgeInsets.only(bottom: 0),
+                    child: Center(
+                      child: Column(
+                        children: const [
+                          Text(
+                            'Il tuo carrello è attualmente vuoto',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 else
@@ -134,7 +142,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     ),
                   ),
                 const SizedBox(
-                  height: 24,
+                  height: 12,
                 ),
                 ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),

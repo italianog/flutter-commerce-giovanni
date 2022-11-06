@@ -1,18 +1,20 @@
 import 'package:ecommerce/fakedb/db.dart';
+import 'package:ecommerce/providers/favorites_provider.dart';
 import 'package:ecommerce/ui/widgets/search/search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../models/product.dart';
 import '../../../widgets/products/item_grid_tile.dart';
 
-class PaniniTab extends StatefulWidget {
+class PaniniTab extends ConsumerStatefulWidget {
   const PaniniTab({Key? key}) : super(key: key);
 
   @override
-  State<PaniniTab> createState() => _PaniniTabState();
+  ConsumerState<PaniniTab> createState() => _PaniniTabState();
 }
 
-class _PaniniTabState extends State<PaniniTab> {
+class _PaniniTabState extends ConsumerState<PaniniTab> {
   String? _filterName;
   List<Product> _products = [];
   final TextEditingController _controller = TextEditingController();
@@ -24,8 +26,16 @@ class _PaniniTabState extends State<PaniniTab> {
     setState(() {});
   }
 
+  //TODO finire
+  void refreshFavorites() {
+    for (var x in _products) {}
+  }
+
   @override
   Widget build(BuildContext context) {
+    ref.listen(favoritesProvider, (previous, next) {
+      refreshFavorites();
+    });
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);

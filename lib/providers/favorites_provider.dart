@@ -14,6 +14,14 @@ class FavoritesNotifier extends StateNotifier<List<Product>> {
         if (product.id != productId) product,
     ];
   }
+
+  bool isFavorite(String id) {
+    bool found = false;
+    for (var element in state) {
+      if (element.id == id) found = true;
+    }
+    return found;
+  }
 }
 
 final favoritesProvider =
