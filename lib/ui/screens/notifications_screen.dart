@@ -1,21 +1,24 @@
-import 'package:ecommerce/fakedb/db.dart';
+import 'package:ecommerce/providers/notifications_provider.dart';
 import 'package:ecommerce/ui/screens/notification_detail_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/push_notification.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
   static const routeName = '/notifications-screen';
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  ConsumerState<NotificationsScreen> createState() =>
+      _NotificationsScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
-  final List<PushNotification> _notifications = FakeDB.notifications;
+class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
+    final List<PushNotification> _notifications =
+        ref.read(notificationsProvider);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

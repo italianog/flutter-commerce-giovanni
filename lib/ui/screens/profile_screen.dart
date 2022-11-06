@@ -1,4 +1,5 @@
 import 'package:ecommerce/providers/auth_provider.dart';
+import 'package:ecommerce/providers/notifications_provider.dart';
 import 'package:ecommerce/ui/screens/change_password.dart';
 import 'package:ecommerce/ui/screens/edit_profile.dart';
 import 'package:ecommerce/ui/screens/favorites_screen.dart';
@@ -9,7 +10,6 @@ import 'package:ecommerce/ui/screens/settings_screen.dart';
 import 'package:ecommerce/ui/screens/signin_screen.dart';
 import 'package:ecommerce/ui/screens/terms_and_conditions_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,6 +32,41 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       backgroundColor: AppColors.backgroundGrey,
       appBar: AppBar(
         title: const Text('Profilo'),
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(NotificationsScreen.routeName);
+                },
+                icon: const Icon(Icons.notifications_none_outlined),
+              ),
+              Positioned(
+                right: 3,
+                top: 4,
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.black54),
+                  child: Text(
+                    ref
+                        .watch(notificationsProvider)
+                        .where((element) => element.read == false)
+                        .toList()
+                        .length
+                        .toString(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 12),
+                  ),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
