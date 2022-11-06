@@ -65,6 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'flutter-ecommerce-fed8e',
     databaseURL: 'https://flutter-ecommerce-fed8e-default-rtdb.firebaseio.com',
     storageBucket: 'flutter-ecommerce-fed8e.appspot.com',
+    androidClientId: '163020965558-nk6vfk420uevud7j010amfdbka4156cb.apps.googleusercontent.com',
     iosClientId: '163020965558-lb81n25f6gh6alrch766u56r0tniub6c.apps.googleusercontent.com',
     iosBundleId: 'com.giovanniitaliano.ecommerce',
   );

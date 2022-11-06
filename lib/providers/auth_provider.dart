@@ -23,7 +23,11 @@ class AuthNotifier extends StateNotifier<User?> {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
-    await GoogleSignIn().signOut();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    if (await googleSignIn.isSignedIn()) {
+      await GoogleSignIn().signOut();
+    }
+
     state = _firebaseAuth.currentUser;
   }
 

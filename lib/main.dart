@@ -72,6 +72,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configLoading();
   await Firebase.initializeApp(
+    name: 'name-here',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
