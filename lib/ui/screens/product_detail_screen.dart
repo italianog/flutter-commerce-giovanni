@@ -39,7 +39,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _product = ModalRoute.of(context)!.settings.arguments as Product;
       similarProds = FakeDB.products
-          .where((element) => element.category == _product?.category)
+          .where((element) =>
+              element.category == _product?.category &&
+              element.id != _product?.id)
           .toList();
       setState(() {});
     });

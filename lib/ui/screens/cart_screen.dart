@@ -210,8 +210,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                  ),
                   onPressed: () {
                     final result = validateOrder();
                     if (result == true) {
