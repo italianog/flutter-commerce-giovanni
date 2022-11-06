@@ -13,8 +13,9 @@ class AuthNotifier extends StateNotifier<User?> {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       state = _firebaseAuth.currentUser;
-    } on Exception catch (e) {
-      // TODO
+    } on Exception catch (_) {
+      EasyLoading.showError('Si è verificato un errore');
+      EasyLoading.dismiss();
       return false;
     }
     return true;
@@ -22,6 +23,7 @@ class AuthNotifier extends StateNotifier<User?> {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
+    await GoogleSignIn().signOut();
     state = _firebaseAuth.currentUser;
   }
 
@@ -36,9 +38,10 @@ class AuthNotifier extends StateNotifier<User?> {
     );
 
     try {
-      final result = await _firebaseAuth.createUserWithEmailAndPassword(
+      await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-    } on Exception catch (e) {
+    } on Exception catch (_) {
+      EasyLoading.showError('Si è verificato un errore');
       EasyLoading.dismiss();
     }
     await EasyLoading.showSuccess('Utente creato con Successo');
@@ -58,9 +61,17 @@ class AuthNotifier extends StateNotifier<User?> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
+    await EasyLoading.show(
+      status: 'Caricamento in corso ...',
+      maskType: EasyLoadingMaskType.black,
+    );
     // Once signed in, return the UserCredential
     final result = await FirebaseAuth.instance.signInWithCredential(credential);
     state = _firebaseAuth.currentUser;
+    await EasyLoading.showSuccess(
+      'Login effettuato con Successo',
+    );
+    await EasyLoading.dismiss();
     return result;
   }
 }

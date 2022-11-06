@@ -20,7 +20,6 @@ class _EditProfileState extends ConsumerState<EditProfile> {
     'phone': TextEditingController(),
   };
   final _formKey = GlobalKey<FormState>();
-  bool _dirty = false;
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final User? _user = ref.read(authProvider);
+    final User? user = ref.read(authProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Modifica profilo'),
@@ -63,7 +62,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
               ),
               TextFormField(
                 enabled: false,
-                initialValue: _user?.email,
+                initialValue: user?.email,
                 decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
