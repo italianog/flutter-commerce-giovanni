@@ -4,6 +4,8 @@ import 'package:ecommerce/ui/widgets/buttons/primary_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../models/order.dart';
 import '../utils/utils.dart';
@@ -151,9 +153,16 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                                           Icons.phone_android_outlined),
                                       title:
                                           const Text('Chiama al nostro numero'),
-                                      onTap: () {
+                                      onTap: () async {
                                         Navigator.pop(context);
-                                        //TODO url_launcher
+                                        String telephoneNumber =
+                                            '+2347012345678';
+                                        String smsUrl = "tel:$telephoneNumber";
+                                        if (await canLaunchUrlString(smsUrl)) {
+                                          await launchUrlString(smsUrl);
+                                        } else {
+                                          throw "Error occured trying to send a message that number.";
+                                        }
                                       },
                                     ),
                                     const SizedBox(
@@ -163,8 +172,21 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                                       leading: const Icon(Icons.mail),
                                       title: const Text(
                                           'Scrivi una mail al nostro team'),
-                                      onTap: () {
+                                      onTap: () async {
                                         Navigator.pop(context);
+                                        final Uri params = Uri(
+                                          scheme: 'mailto',
+                                          path: 'email@example.com',
+                                          query:
+                                              'subject=App Feedback&body=App Version 3.23', //add subject and body here
+                                        );
+
+                                        var url = params.toString();
+                                        if (await canLaunchUrlString(url)) {
+                                          await launchUrlString(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
                                       },
                                     ),
                                   ],

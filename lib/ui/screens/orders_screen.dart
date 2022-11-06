@@ -53,6 +53,9 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                     );
                   }
                 }),
+            const SizedBox(
+              height: 32,
+            ),
           ],
         ),
       ),
