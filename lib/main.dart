@@ -34,6 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'firebase_messaging_utils.dart';
 import 'firebase_options.dart';
 
@@ -58,6 +59,12 @@ void initFirebaseMessaging() {
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
     }
+  });
+}
+
+Future<void> getFirebaseToken() async {
+  FirebaseMessaging.instance.getToken().then((value) {
+    const FlutterSecureStorage().write(key: 'fcm_token', value: value);
   });
 }
 

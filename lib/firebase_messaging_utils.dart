@@ -8,11 +8,11 @@ Future<void> requestNotificationsPermission() async {
   NotificationSettings notificationSetting =
       await firebaseMessaging.requestPermission(
     alert: true,
-    announcement: false,
     badge: true,
+    sound: true,
+    announcement: false,
     carPlay: false,
     criticalAlert: false,
-    sound: true,
   );
 
   switch (notificationSetting.authorizationStatus) {
@@ -34,8 +34,8 @@ void firebaseListen() {
       'High Importance Notifications', // title
       importance: Importance.max,
     );
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
+    //RemoteNotification? notification = message.notification;
+    //AndroidNotification? android = message.notification?.android;
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 
@@ -43,12 +43,6 @@ void firebaseListen() {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-  });
-}
-
-Future<void> getFirebaseToken() async {
-  FirebaseMessaging.instance.getToken().then((value) {
-    print(value);
   });
 }
 

@@ -1,8 +1,8 @@
 class Address {
-  String id;
-  String address;
-  String postalCode;
-  String city;
+  final String id;
+  final String address;
+  final String postalCode;
+  final String city;
 
   Address({
     required this.id,
